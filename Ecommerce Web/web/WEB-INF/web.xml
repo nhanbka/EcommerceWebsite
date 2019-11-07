@@ -40,6 +40,6 @@
     
     <context-param>
         <param-name>imgProductPath</param-name>
-        <param-value>img/demo/</param-value>
+        <param-value>./img/demo/</param-value>
     </context-param>
 </web-app>
