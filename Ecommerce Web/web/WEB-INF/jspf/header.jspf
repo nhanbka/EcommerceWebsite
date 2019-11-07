@@ -1,0 +1,42 @@
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- CSS Files -->
+        <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/simple_menu.css">
+        <link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen">
+        <link rel="stylesheet" type="text/css" href="boxes/css/style6.css">
+        <link rel="stylesheet" type="text/css" href="js/fancybox/jquery.fancybox.css" media="all">
+        <!-- JS Files -->
+        <!-- ... -->
+    </head>
+    <body>
+        <div class="header">
+            <div id="site_title">
+            </div>
+            <div id="menu">
+                <div class="active_menu_item"><a href="#">Home</a></div>
+                <div class="active_menu_item"><a href="#">Category</a>
+                    <li class="flow_menu"><a href="#">Mac</a>
+                        <ul>
+                            <li><a href="#">iMac</a></li>
+                            <li><a href="#">Mac Pro</a></li>
+                            <li><a href="#">MacBook Air</a></li>
+                            <li><a href="#">MacBook Pro</a></li>
+                        </ul>
+                    </li>
+                </div>
+
+                <div class="active_menu_item"><a href="#">iPad</a></div>
+                <div class="active_menu_item"><a href="#">iPhone</a></div>
+                <div class="active_menu_item"><a href="#">Accessories</a></div>
+            </div>
+        </div>
+

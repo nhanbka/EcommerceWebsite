@@ -1,0 +1,41 @@
+
+<!-- above are body and header -->
+
+<div class="footer">
+    <!-- First Column -->
+    <div class="one-fourth" style='top:-32px'>
+        <h3>Customers' Services</h3>
+        <hr>
+        <ul class="footer_links">
+            <li><a href="contact.jsp">Contact</a></li>
+        </ul>
+    </div>
+    <!-- Second Column -->
+    <div class="one-fourth" style='top:-32px'>
+        <h3>Adminstrator</h3>
+        <hr>
+        <ul class="footer_links">
+            <li><a href="#">Login</a></li>
+        </ul>
+    </div>
+    <!-- Third Column -->
+    <div class="one-fourth">
+        <h3>Information</h3>
+        <hr>
+        <ul><li>For online shopping Apple's products.</li>
+            <div id='social_icons'><li> Theme by <a href="http://www.csstemplateheaven.com">CssTemplateHeaven</a></li>
+                <li>Photos <a href="http://dieterschneider.net">Dieter Schneider</a></li>
+            </div>
+        </ul>
+    </div>
+    <!-- Fourth Column -->
+    <div class="one-fourth-last" style='top:-52px'>
+        <h3>Socialize</h3>
+        <hr>
+        <div style="clear:both"></div>
+    </div>
+</div>
+
+<!-- END footer -->
+</body>
+</html>

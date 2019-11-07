@@ -1,0 +1,29 @@
+
+#menu {
+    position: relative;
+    top: 15px;
+    display: inline-block;
+    align-items: center;
+    width: 95%;
+    padding-left: 5%;
+}
+
+.active_menu_item {
+    position: relative;
+    top: 10vh;
+    text-align: center;
+    vertical-align: sub;
+    height: 30px;
+    margin-left: 3%;
+    display: inline-block;
+    width: 15%;
+}
+
+.active_menu_item:hover {
+    background-color: #C0DCF3;
+}
+
+.flow_menu {
+    display: none;
+}
+

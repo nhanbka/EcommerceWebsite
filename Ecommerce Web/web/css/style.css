@@ -1,0 +1,70 @@
+
+/* 
+    css for header.jspf 
+    will be applied in all pages
+*/
+
+.header{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    display: inline-block;
+    width: 100%;
+    background-color: #E5E9ED;
+    height: 20vh;
+}
+
+
+/* 
+    css for footer.jspf 
+    will be applied in all pages
+*/
+.footer {
+    margin-top: 10px;
+    width: 100%;
+    background-color: #E5E9ED;
+    vertical-align: top;
+    height: calc(25vh - 10px);
+}
+
+.one-fourth {
+    position: relative;
+    margin-left: 5px;
+    padding-left: 10px;
+    width: 23%;
+    display: inline-block;
+}
+
+.one-fourth-last{
+    position: relative;
+    width: 24%;
+    margin-left: 5px;
+    padding-left: 10px;
+    display: inline-block;
+}
+
+
+/* 
+    css for body segment
+    will be applied in all pages
+*/
+body {
+    min-height: 100vh;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    margin: 0px 0px 0px 0px;
+    font-family: Arial;
+    font-size: 14px;
+}
+
+.content {
+    margin-top: 10px;
+    margin-left: 20px;
+    min-height: calc(55vh - 20px);
+}
+
+a {
+    color: #000;
+}
