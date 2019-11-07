@@ -1,6 +1,5 @@
-
             <div class="footer">
-                <div class="footer_resize"> <a href="#"><img src="./images/logo_footer.png" alt="" width="96" height="54" border="0" class="loggo" /></a>
+                <div class="footer_resize"> <a href="#"><img src="images/logo_footer.png" alt="" width="112" height="63" border="0" class="loggo" /></a>
                     <p class="right"> <a href="#"><img src="images/rss_1.gif" alt="" width="16" height="16" border="0" class="rss" /></a> <a href="#"><img src="images/rss_2.gif" alt="" width="16" height="16" border="0" class="rss" /></a> <a href="#"><img src="images/rss_3.gif" alt="" width="16" height="16" border="0" class="rss" /></a> <a href="#"><img src="images/rss_4.gif" alt="" width="16" height="16" border="0" class="rss" /></a> © Copyright websitename . All Rights Reserved<br />
                         <a href="#">Home</a> | <a href="#">Contact</a> | <a href="#">RSS</a> (Blue) <a href="http://www.bluewebtemplates.com">Website Templates</a></p>
                     <div class="clr"></div>
