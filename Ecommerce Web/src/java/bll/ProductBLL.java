@@ -22,13 +22,12 @@ public class ProductBLL {
             DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/eMarket");
             Connection conn = ds.getConnection();
             Statement sttm = conn.createStatement();
-            String sql = "select * from Product";
+            String sql = "select TOP " + number + "* from Product";
             ResultSet rs = sttm.executeQuery(sql);
             ArrayList<Product> prods = new ArrayList<>();
             while(rs.next()){
                 Product p = new Product();
                 p.setProductID(rs.getInt("product_id"));
-                p.setCategoryID(rs.getInt("category_id"));
                 p.setPrice(rs.getFloat("price"));
                 p.setDescription(rs.getString("description"));
                 p.setImage(rs.getString("image"));

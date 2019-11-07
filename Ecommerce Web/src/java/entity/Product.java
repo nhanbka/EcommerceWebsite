@@ -8,7 +8,6 @@ public class Product {
     private float price;
     private String description;
     private Date lastUpdate;
-    private int categoryID;
     private String image;
     private String thumbImage;
     private String descriptionDetail;
@@ -51,14 +50,6 @@ public class Product {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
-    }
-
-    public int getCategoryID() {
-        return categoryID;
-    }
-
-    public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
     }
 
     public String getImage() {
