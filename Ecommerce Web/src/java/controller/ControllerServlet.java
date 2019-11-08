@@ -6,8 +6,10 @@
 package controller;
 
 import bll.ProductBLL;
+import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -41,8 +43,10 @@ public class ControllerServlet extends HttpServlet {
         super.init(servletConfig);
         
         ProductBLL productBLL=new ProductBLL();
-        getServletContext().setAttribute("newProducts", productBLL.getNewProducts(5));
+        List<Product> result = productBLL.getNewProducts(5);
+        getServletContext().setAttribute("newProducts", result);
     }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
