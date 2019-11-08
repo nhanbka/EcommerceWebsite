@@ -37,6 +37,8 @@ public class ProductBLL {
                 p.setDescriptionDetail(rs.getString("description_detail"));
                 prods.add(p);   
             }
+            rs.close();
+            conn.close();
             return prods;
         } catch(SQLException ex){
         } catch (NamingException ex) {
