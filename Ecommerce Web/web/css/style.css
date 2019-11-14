@@ -25,7 +25,7 @@ html { padding:0; margin:0;}
 .menu ul li a:hover { color:#fff; border-bottom:3px solid #e8ad09;}
 .menu ul li a.active { color:#fff; border-bottom:3px solid #e8ad09;}
 /* search_bg */
-.search_bg { background: #BFBEBA; margin:0 auto 10px auto; padding:0; width:980px;}
+.search_bg { background: #FFFFFF; margin:0 auto 10px auto; padding:0; width:980px; border-radius: 5px;}
 .search_bg p.search_bgg { width:300px; float:left; color:#1a2328; padding:13px 0 0 20px; margin:0; line-height:1.8em; font:normal 12px Arial, Helvetica, sans-serif;}
 .search_bg img.search1 { float:left; margin:10px 20px 0 20px; padding:0;}
 /* */

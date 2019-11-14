@@ -1,6 +1,11 @@
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('a[href="index.jsp"]').addClass("active");
+        $('<link>').appendTo('head').attr({
+                    type: 'text/css',
+                    rel: 'stylesheet',
+                    href: './css/index-style.css'
+                });
     });
 </script>
 <div class="header_blog">
@@ -49,6 +54,10 @@
 <div class="clr"></div>
 <div class="body">
     <div class="search_bg">
+        <div class="login">
+            <a href="register.jsp"><div class="login_element">Register</div></a>
+            <a href="login.jsp"><div class="login_element">Login</div></a>
+        </div>
         <div class="search">
             <form id="form1" name="form1" method="post" action="#">
                 <span>
