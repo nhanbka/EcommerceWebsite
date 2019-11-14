@@ -57,6 +57,7 @@ CREATE TABLE category (
 	image varchar(255)
 );
 
+
 CREATE TABLE product (
 	product_id int PRIMARY KEY,
 	name varchar(255),
@@ -74,3 +75,27 @@ CREATE TABLE product (
 	REFERENCES category(category_id)
 );
 
+INSERT INTO product_detail (product_id) VALUES
+	(1);
+
+INSERT INTO category (category_id) VALUES (1);
+
+INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
+					last_update, categorycategory_id) VALUES 
+	(1, 'Macbook Pro Late 2013', '5000000.0', 
+	'The Macbook Pro Late 2013',
+	'The MacBook Pro "Core i5" 2.4 13-Inch (Late 2013) features 2.4 GHz Intel "Core i5" processor,
+	 with dual independent processor "cores" on a single silicon chip, a 3 MB shared level 3 cache,
+	 8 GB of onboard DDR3L SDRAM, 256 GB of PCIe-based flash storage, and an integrated Intel Iris
+	 5100 graphics processor that shares memory with the system. It also has an integrated 720p FaceTime
+	 HD webcam and a high-resolution LED-backlit 13.3" widescreen 2560x1600 "Retina" display in a case
+     that weighs just less than 3.5 pounds (1.57 kg). Connectivity includes 802.11ac Wi-Fi, Bluetooth 4.0,
+	 two USB 3.0 ports, two "Thunderbolt 2" ports, an HDMI port, an audio in/out port, and an SDXC card slot.
+	 It does not have an internal optical drive. Comes with US English Keyboard. Battery Backup
+	 guaranteed for a minimum of 60 minutes.', 
+	 'MacLate2013.png', 
+	 'MacLate2013.png', 
+	 getdate(),
+	 1);
+
+	 

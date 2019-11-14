@@ -1,0 +1,84 @@
+.wthree-pro h2 {
+    font-size: 1.2em;
+    color: #000;
+    letter-spacing: 4px;
+    margin-bottom: 1.5em;
+    text-transform: uppercase;
+}
+.sub-main-w3 input[type="email"], .sub-main-w3 input[type="password"] {
+    outline: none;
+    font-size: .9em;
+    padding: 1em 3em 1em 1em;
+    border: none;
+    margin-bottom: 0.3em;
+    background: rgba(255, 255, 255, 0.85);
+    width: 82%;
+    color: #000;
+    border-radius: 30px;
+    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 1px;
+}
+.sub-main-w3 {
+    width: 26%;
+    margin: 10em auto 12em;
+}
+.sub-w3l h6 a {
+    font-size: .9em;
+    color: #fff;
+    letter-spacing: 1px;
+    text-align: right;
+    display: inherit;
+}
+.sub-w3l {
+    margin-top: 1em;
+}
+.right-w3l {
+    margin-top: 2em;
+}
+.pom-agile {
+    position: relative;
+}
+input.pass {
+    margin-top: .7em;
+}
+span.icon1, span.icon2 {
+    color: #ea2858;
+    font-size: 1.1em;
+    position: absolute;
+    right: 6%;
+}
+span.icon1 {
+    top: 23%;
+}
+span.icon2 {
+    top: 34%;
+}
+.sub-main-w3 input[type="submit"] {
+    color: white;
+    background: #ea2858;
+    border: none;
+    padding: .7em 0;
+    outline: none;
+    width: 44%;
+    font-size: 1em;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+    border-radius: 30px;
+}
+.sub-main-w3 input[type="submit"]:hover {
+    background: #fff;
+    color: black;
+    transition:0.5s all;
+    -webkit-transition:0.5s all;
+    -o-transition:0.5s all;
+    -moz-transition:0.5s all;
+    -ms-transition:0.5s all;
+}

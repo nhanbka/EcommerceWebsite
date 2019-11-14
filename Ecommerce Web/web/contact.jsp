@@ -49,7 +49,7 @@
                             </li>
                             <li>
                                 <label for="message">Message <span class="red">*</span></label>
-                                <textarea id="message" name="message" rows="6" cols="50"></textarea>
+                                <textarea id="message" name="message" rows="6" cols="50" style="resize:none"></textarea>
                             </li>
                             <li class="buttons">
                                 <input type="image" name="imageField" id="imageField" src="images/send.gif" class="send" />
