@@ -90,3 +90,7 @@ span.icon2 {
     position: relative;
     top: 13px;
 }
+
+.alert-text {
+    color: red;
+}

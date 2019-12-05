@@ -2,10 +2,10 @@
     $(document).ready(function () {
         $('a[href="index.jsp"]').addClass("active");
         $('<link>').appendTo('head').attr({
-                    type: 'text/css',
-                    rel: 'stylesheet',
-                    href: './css/index-style.css'
-                });
+            type: 'text/css',
+            rel: 'stylesheet',
+            href: './css/index-style.css'
+        });
     });
 </script>
 <div class="header_blog">
@@ -54,10 +54,17 @@
 <div class="clr"></div>
 <div class="body">
     <div class="search_bg">
+        <% if (session.getAttribute("name") == null ) { %>
         <div class="login">
             <a href="register.jsp"><div class="login_element">Register</div></a>
             <a href="login.jsp"><div class="login_element">Login</div></a>
         </div>
+        <% } else { %>
+        <div class="login_done">
+            <div class="welcome_element">Welcome, <%= session.getAttribute("name") %></div> 
+            <a href="logout"><div class="login_element">Logout</div></a>
+        </div>
+        <% }%>
         <div class="search">
             <form id="form1" name="form1" method="post" action="#">
                 <span>

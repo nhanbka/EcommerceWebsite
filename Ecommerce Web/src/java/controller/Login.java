@@ -8,16 +8,13 @@ package controller;
 import entity.EmarketUser;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,8 +25,8 @@ import javax.sql.DataSource;
  *
  * @author ADMIN
  */
-@WebServlet(name = "register", urlPatterns = {"/register"})
-public class Register extends HttpServlet {
+
+public class Login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -47,17 +44,20 @@ public class Register extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet register</title>");
+            out.println("<title>Servlet Login</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet register at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
-    private static int registerNormalUser(String name, String user_id, String password, String gender, String email) {
-        return EmarketUser.registerNormalUser(name, user_id, password, gender, email);
+    private boolean isValid(String email, String password, DataSource ds) {
+        if (EmarketUser.isExistEmail(email, ds) && EmarketUser.getPassword(email, ds).equals(password)) {
+            return true;
+        }
+        return false;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -91,34 +91,14 @@ public class Register extends HttpServlet {
             initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
-            try {
-                HttpSession session;
-                session = request.getSession();
-                Connection conn = ds.getConnection();
-                String id = request.getParameter("user_id");
-                String email = request.getParameter("email");
-                String gender = request.getParameter("gender");
-                String name = request.getParameter("name");
-                String password = request.getParameter("password");
-                int registerPossibility = registerNormalUser(name, id, password, gender, email);
-                switch (registerPossibility) {
-                    case 1:
-                        session.setAttribute("register", "1");
-                        session.setAttribute("id", id);
-                        session.setAttribute("name", name);
-                        request.getRequestDispatcher("register.jsp").include(request, response);
-                        break;
-                    case -1:
-                        session.setAttribute("register", "0");
-                        request.getRequestDispatcher("register.jsp").include(request, response);
-                        break;
-                    case 0:
-                        session.setAttribute("register", "-1");
-                        request.getRequestDispatcher("register.jsp").include(request, response);
-                        break;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            if (isValid(email, password, ds)) {
+                HttpSession session = request.getSession();
+                String name = EmarketUser.getUserName(email);
+                session.setAttribute("name", name);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+                dispatcher.forward(request, response);
             }
         } catch (NamingException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);

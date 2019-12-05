@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -163,43 +165,40 @@ public class EmarketUser implements Serializable {
         return "entity.EmarketUser[ emarketUserPK=" + emarketUserPK + " ]";
     }
 
-    public String getPassword(String username) {
-        String query = "SELECT password FROM Reader"
-                + " WHERE username='" + username + "'";
-        Connection conn = null;
-        String result = null;
-        try {
-            Context initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup("java:comp/env");
-            DataSource ds = (DataSource) envContext.lookup("jdbc/BookStoreOnl");
+    public static String getPassword(String email, DataSource ds) {
+        if (isExistEmail(email, ds)) {
+            String query = "SELECT user_password FROM emarket_user"
+                    + " WHERE email='" + email + "'";
+            Connection conn = null;
+            String result = null;
             try {
                 conn = ds.getConnection();
                 Statement statement = conn.createStatement();
                 ResultSet rs = statement.executeQuery(query);
                 if (rs.next()) {
-                    result = rs.getString("password");
+                    result = rs.getString("user_password");
                 } else {
                     return "";
                 }
             } catch (SQLException s) {
                 System.err.println(s);
             } finally {
-                conn.close();
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EmarketUser.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-
-        } catch (NamingException n) {
-            System.err.print(n);
-        } catch (SQLException s) {
-            System.err.println(s);
+            return result;
         }
-        return result;
+        return null;
     }
 
-    public String getUserName(String user_id) {
+    public static String getUserName(String email) {
         String query = "SELECT name FROM emarket_user"
-                + " WHERE id='" + user_id + "'";
+                + " WHERE email='" + email + "'";
         Connection conn = null;
-        String result = null;
+        String UserNameByEmail = null;
         try {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
@@ -209,7 +208,7 @@ public class EmarketUser implements Serializable {
                 Statement statement = conn.createStatement();
                 ResultSet rs = statement.executeQuery(query);
                 if (rs.next()) {
-                    result = rs.getString("name");
+                    UserNameByEmail = rs.getString("name");
                 }
             } catch (SQLException s) {
                 System.err.println(s);
@@ -221,11 +220,11 @@ public class EmarketUser implements Serializable {
         } catch (SQLException s) {
             System.err.println(s);
         }
-        return result;
+        return UserNameByEmail;
     }
 
-    public boolean isDuplicate(String user_id, String email, DataSource ds) {
-        String query = "SELECT username, email FROM emarket_user";
+    public static boolean isExistEmail(String email, DataSource ds) {
+        String query = "SELECT email FROM emarket_user";
         Connection conn = null;
         ResultSet rs = null;
         try {
@@ -233,7 +232,7 @@ public class EmarketUser implements Serializable {
             Statement statement = conn.createStatement();
             rs = statement.executeQuery(query);
             while (rs.next()) {
-                if (rs.getString("id").equals(user_id) || rs.getString("email").equals(email)) {
+                if (rs.getString("email").equals(email)) {
                     return true;
                 }
             }
@@ -245,33 +244,55 @@ public class EmarketUser implements Serializable {
         return false;
     }
 
-    public int registerNormalUser(String name, String user_id, String password, String gender, String email) {
+    public static boolean isExistUserId(String user_id, DataSource ds) {
+        String query = "SELECT username FROM emarket_user";
+        Connection conn = null;
+        ResultSet rs = null;
+        try {
+            conn = ds.getConnection();
+            Statement statement = conn.createStatement();
+            rs = statement.executeQuery(query);
+            while (rs.next()) {
+                if (rs.getString("id").equals(user_id)) {
+                    return true;
+                }
+            }
+            conn.close();
+            rs.close();
+        } catch (SQLException s) {
+            System.err.print(s);
+        }
+        return false;
+    }
+
+    public static int registerNormalUser(String name, String user_id, String password, String gender, String email) {
         /* 
         -- return 1 if success   ------
         -- return 0 if duplicate ------
         -- return -1 if error    ------
-        */
-        
-        String query = "INSERT INTO emarket_user (id, user_password, user_role, name, gender, balance, email) VALUES (?, ?, ?, ?, ?, ?, ?)";
+         */
+
+        String query = "INSERT INTO emarket_user (id, user_password, "
+                + "user_role, name, gender, balance, email) VALUES (?, ?, ?, N'" + name + "', ?, ?, ?)";
         Connection conn = null;
         try {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
-            if (!isDuplicate(user_id, email, ds)) {
+            if (!(isExistUserId(user_id, ds) && isExistEmail(email, ds))) {
                 try {
                     conn = ds.getConnection();
                     PreparedStatement preparedStatement = conn.prepareStatement(query);
                     preparedStatement.setString(1, user_id);
                     preparedStatement.setString(2, password);
                     preparedStatement.setInt(3, 0);
-                    preparedStatement.setString(4, name);
-                    if (gender.equals("male"))
-                        preparedStatement.setInt(5, 1);
-                    else
-                        preparedStatement.setInt(5, 0);
-                    preparedStatement.setInt(6, 0);
-                    preparedStatement.setString(7, email);
+                    if (gender.equals("male")) {
+                        preparedStatement.setInt(4, 1);
+                    } else {
+                        preparedStatement.setInt(4, 0);
+                    }
+                    preparedStatement.setInt(5, 0);
+                    preparedStatement.setString(6, email);
                     preparedStatement.execute();
                 } catch (SQLException s) {
                     System.err.println(s);
