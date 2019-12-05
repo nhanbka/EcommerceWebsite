@@ -4,7 +4,7 @@
     });
 </script>
 <div class="header_blog">
-    <div class="header_blog_resize"> <a href="#"><img src="images/top_link.gif" alt="" width="192" height="44" border="0" /></a>
+    <div class="header_blog_resize">
         <h2>Contact</h2>
     </div>
     <div class="clr"></div>

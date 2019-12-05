@@ -98,4 +98,14 @@ INSERT INTO product (product_id, name, price, description, description_detail, i
 	 getdate(),
 	 1);
 
-	 
+CREATE TABLE emarket_user (
+	id varchar(20),
+	user_password VARCHAR(30) NOT NULL,
+	user_role INT CHECK(user_role BETWEEN 0 AND 3) NOT NULL,
+	name NVARCHAR(50) NOT NULL,
+	gender INT CHECK (gender BETWEEN 0 AND 2) NOT NULL,
+	balance INT NOT NULL,
+	email varchar(50),
+	PRIMARY KEY (id, email)
+);
+

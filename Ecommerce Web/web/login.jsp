@@ -16,13 +16,13 @@
                         <div class="wthree-pro">
                             <h2>Login Quick</h2>
                         </div>
-                        <form action="#" method="post">
+                        <form action="Login" method="post">
                             <div class="pom-agile">
-                                <input placeholder="E-mail" name="Name" class="user" type="email" required="">
+                                <input placeholder="E-mail" name="email" class="user" type="email" required="">
                                 <span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>
                             </div>
                             <div class="pom-agile">
-                                <input  placeholder="Password" name="Password" class="pass" type="password" required="">
+                                <input  placeholder="Password" name="password" class="pass" type="password" required="">
                                 <span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span>
                             </div>
                             <div class="sub-w3l">

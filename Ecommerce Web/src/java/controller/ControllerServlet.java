@@ -5,13 +5,14 @@
  */
 package controller;
 
-import bll.ProductBLL;
+import entity.Category;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.naming.NamingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -19,34 +20,26 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sessionbean.ProductSessionBean;
+import javax.servlet.http.HttpSession;
+import sessionbean.CategorySessionBean;
 
-/**
+
+/* *
  *
  * @author Dell
  */
-@WebServlet(name = "ControllerServlet",
-                    loadOnStartup = 1,
-                    urlPatterns = {"/ControllerServlet"})
+@WebServlet(name = "ControllerServlet", urlPatterns = {"/ControllerServlet", "/category",})
 public class ControllerServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+    /* *
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    public void init(ServletConfig servletConfig) throws ServletException{
-        super.init(servletConfig);
-        
-        ProductBLL productBLL=new ProductBLL();
-        List<Product> result = productBLL.getNewProducts(5);
-        getServletContext().setAttribute("newProducts", result);
-    }
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -55,18 +48,19 @@ public class ControllerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");            
+            out.println("<title>Servlet NewServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /* *
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -74,34 +68,55 @@ public class ControllerServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @EJB
+    private CategorySessionBean categorySB;
+    private String userPath;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+        userPath = request.getServletPath();
+        HttpSession session = request.getSession();
+        if (userPath.equals("/category")) {
+            String categoryId = request.getQueryString();
+            if (categoryId != null) {
+                Category selectedCategory;
+                List<Product> categoryProducts;
+                selectedCategory
+                        = categorySB.find(Integer.parseInt(categoryId));
+                session.setAttribute("selectedCategory", selectedCategory);
+                categoryProducts = (List<Product>) selectedCategory.getProductCollection();
+                session.setAttribute("categoryProducts", categoryProducts);
+            }
+            String url = userPath + ".jsp";
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            request.getRequestDispatcher("category.jsp").forward(request, response);
+        }
+    }
+        /**
+         * Handles the HTTP <code>POST</code> method.
+         *
+         * @param request servlet request
+         * @param response servlet response
+         * @throws ServletException if a servlet-specific error occurs
+         * @throws IOException if an I/O error occurs
+         */
+        @Override
+        protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+            processRequest(request, response);
+        }
 
-    /**
+        /* *
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+         */
+        @Override
+        public String getServletInfo
+        
+            () {
         return "Short description";
-    }// </editor-fold>
+        }// </editor-fold>
 
-}
+    }
