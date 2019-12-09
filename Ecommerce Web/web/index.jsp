@@ -54,14 +54,14 @@
 <div class="clr"></div>
 <div class="body">
     <div class="search_bg">
-        <% if (session.getAttribute("name") == null ) { %>
+        <% if (session.getAttribute("name") == null) { %>
         <div class="login">
             <a href="register.jsp"><div class="login_element">Register</div></a>
             <a href="login.jsp"><div class="login_element">Login</div></a>
         </div>
-        <% } else { %>
+        <% } else {%>
         <div class="login_done">
-            <div class="welcome_element">Welcome, <%= session.getAttribute("name") %></div> 
+            <div class="welcome_element">Welcome, <%= session.getAttribute("name")%></div> 
             <a href="logout"><div class="login_element">Logout</div></a>
         </div>
         <% }%>
@@ -87,7 +87,6 @@
                         <p><a href="#">Buy Now</a></p>
                     </div>
                 </c:forEach>
-
                 <div class="clr"></div>
             </div>
         </div>
