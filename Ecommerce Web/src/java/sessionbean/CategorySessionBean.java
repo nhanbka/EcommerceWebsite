@@ -6,13 +6,16 @@
 package sessionbean;
 
 import entity.Category;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import sessionbean.AbstractSessionBean;
 
 /**
  *
  * @author ADMIN
  */
+@Stateless
 public class CategorySessionBean extends AbstractSessionBean<Category> {
 
     @PersistenceContext(unitName = "Ecommerce_WebPU")

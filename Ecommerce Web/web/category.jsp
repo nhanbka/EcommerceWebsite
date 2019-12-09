@@ -1,40 +1,37 @@
 <%@page import="entity.Category" %>
 <%@page import="java.util.List" %>
 <%@page import="entity.Product" %>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('a[href="index.jsp"]').addClass("active");
+        $('<link>').appendTo('head').attr({
+            type: 'text/css',
+            rel: 'stylesheet',
+            href: './css/category-page-style.css'
+        });
+    });
+</script>
 
 <%
     session.setAttribute("view", "/category");
-    Category category = (Category) session.getAttribute("selectedCategory");
 %>
 
-<div id="container">
-    <div class="one">
-        <div cass="heading_bg">
-            <h2><%=category.getName()%></h2>
-        </div>
-        <div id="portfolio">
-            <div class="portfolio-container" id="columns">
-                <ul>
-                    <%
-                        List<Product> categoryProducts = (List<Product>) session.getAttribute("categoryProducts");
-                        for (Product p : categoryProducts) {
-                    %>
-                    <li class="one-third">
-                        <p>
-                            <a title="<%=p.getName()%>"
-                               href="img/demo/<%=p.getImage()%>" href="img/demo/<%=p.getImage()%>"
-                               class="portfolio-item-preview" data-rel="prettyPhoto">
-                                <img src="img/demo/<%=p.getImage()%>" alt=""
-                                     width="210" height="145" class="portfolio-img pretty-box">
-                            </a>
-                        </p>
-                    </li>
-                    <%
-                        }
-                    %>
-                </ul>
-            </div>
+<div class="body_resize">
+    <div class="body_resize_top" id="category_top">
+        <div class="body_resize_bottom">
+
+            <h2><a href="#">${selectedCategory.getName()}</a></h2>
+                <c:forEach var="p" items="${categoryProducts}">
+                <div class="blog">
+                    <h2><a href="#">${p.getName()}</a></h2>
+                    <img src="${initParam.imgProductPath}${p.getImage()}" alt="No image :(" width="274" height="170" />
+                    <p><strong>${p.getDescription()} </strong><br /></p>
+                    <p><a href="#"><strong>${p.getPrice()} </strong></a></p>
+                    <p><a href="#">Buy Now</a></p>
+                </div>
+            </c:forEach>
+            <div class="clr"></div>
         </div>
     </div>
-    <div style="clear:both; height: 40px"></div>
 </div>
+

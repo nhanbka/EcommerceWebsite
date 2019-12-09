@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import sessionbean.CategorySessionBean;
 import sessionbean.ProductSessionBean;
 
 /**
