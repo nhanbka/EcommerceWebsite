@@ -1,10 +1,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('<link>').appendTo('head').attr({
-                    type: 'text/css',
-                    rel: 'stylesheet',
-                    href: './css/profile-style.css'
-                });
+            type: 'text/css',
+            rel: 'stylesheet',
+            href: './css/profile-style.css'
+        });
     });
 </script>
 <div class="header_blog">
@@ -24,7 +24,7 @@
         <% } else {%>
         <div class="login_done">
             <div class="welcome_element">
-                Welcome, <a href="profile?id=${session.getAttribute("id")}"><%= session.getAttribute("name") %></a>
+                Welcome, <a href="profile?id=${session.getAttribute("id")}"><%= session.getAttribute("name")%></a>
             </div>
             <a href="logout"><div class="login_element">Logout</div></a>
         </div>

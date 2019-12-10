@@ -1,6 +1,11 @@
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('a[href="about.jsp"]').addClass("active");
+        $('<link>').appendTo('head').attr({
+            type: 'text/css',
+            rel: 'stylesheet',
+            href: './css/index-style.css'
+        });
     });
 </script>
 <div class="header_blog">
@@ -20,7 +25,7 @@
         <% } else {%>
         <div class="login_done">
             <div class="welcome_element">
-                Welcome, <a href="profile?id=${session.getAttribute("id")}"><%= session.getAttribute("name") %></a>
+                Welcome, <a href="profile?id=${session.getAttribute("id")}"><%= session.getAttribute("name")%></a>
             </div>
             <a href="logout"><div class="login_element">Logout</div></a>
         </div>
@@ -48,7 +53,7 @@
                         <li>Nguyen Ngoc Duc - 20173025</li>
                     </ol>
                     <p>&nbsp;</p>
-                    
+
                 </div>
                 <div class="clr"></div>
             </div>
