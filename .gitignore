@@ -1,6 +1,6 @@
 # folder in project
-Ecommerce%20Web/build
-Ecommerce%20Web/nbproject
+**/build
+**/nbproject
 
 # Compiled class file
 *.class
