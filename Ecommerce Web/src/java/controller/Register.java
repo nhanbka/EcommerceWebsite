@@ -86,6 +86,7 @@ public class Register extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         Context initContext;
         try {
             initContext = new InitialContext();
@@ -102,6 +103,11 @@ public class Register extends HttpServlet {
                 String password = request.getParameter("password");
                 int registerPossibility = registerNormalUser(name, id, password, gender, email);
                 switch (registerPossibility) {
+                    /* 
+                    -- return 1 if success   ------
+                    -- return 0 if duplicate ------
+                    -- return -1 if error    ------
+                     */
                     case 1:
                         session.setAttribute("register", "1");
                         session.setAttribute("id", id);

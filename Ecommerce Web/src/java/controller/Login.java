@@ -97,6 +97,7 @@ public class Login extends HttpServlet {
                 HttpSession session = request.getSession();
                 String name = EmarketUser.getUserName(email);
                 session.setAttribute("name", name);
+                session.setAttribute("id", EmarketUser.getUserId(email));
                 RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
                 dispatcher.forward(request, response);
             }

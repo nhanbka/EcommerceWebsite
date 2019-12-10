@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('a[href="contact.jsp"]').addClass("active");
     });
 </script>
@@ -12,7 +12,20 @@
 <div class="clr"></div>
 <div class="body">
     <div class="search_bg">
-        <p class="search_bgg"></p>
+        <% if (session.getAttribute("name") == null) { %>
+        <div class="login">
+            <a href="register.jsp"><div class="login_element">Register</div></a>
+            <a href="login.jsp"><div class="login_element">Login</div></a>
+        </div>
+        <% } else {%>
+        <div class="login_done">
+            <div class="welcome_element">
+                Welcome, <a href="profile?id=${session.getAttribute("id")}"><%= session.getAttribute("name") %></a>
+            </div>
+            <a href="logout"><div class="login_element">Logout</div></a>
+        </div>
+        <% }%>
+
         <div class="search">
             <form id="form1" name="form1" method="post" action="#">
                 <span>
@@ -23,6 +36,7 @@
         </div>
         <div class="clr"></div>
     </div>
+        
     <div class="body_resize">
         <div class="body_resize_top">
             <div class="body_resize_bottom">
