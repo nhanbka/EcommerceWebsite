@@ -25,11 +25,11 @@ import javax.sql.DataSource;
  *
  * @author ADMIN
  */
-
 public class Login extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -86,6 +86,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         Context initContext;
         try {
             initContext = new InitialContext();
@@ -93,16 +94,22 @@ public class Login extends HttpServlet {
             DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+
             if (isValid(email, password, ds)) {
                 HttpSession session = request.getSession();
-                String name = EmarketUser.getUserName(email);
-                session.setAttribute("name", name);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-                dispatcher.forward(request, response);
+                int role = EmarketUser.getUserRole(email);
+                session.setAttribute("role", role);
+                if (role == 0) {
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                } else if (role == 1) {
+                    request.getRequestDispatcher("admin.jsp").forward(request, response);
+                }
+       
             }
         } catch (NamingException ex) {
-            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**

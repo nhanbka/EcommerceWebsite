@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -23,6 +24,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.servlet.RequestDispatcher;
 import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,13 +38,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "emarket_user")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EmarketUser.findAll", query = "SELECT e FROM EmarketUser e"),
-    @NamedQuery(name = "EmarketUser.findById", query = "SELECT e FROM EmarketUser e WHERE e.emarketUserPK.id = :id"),
-    @NamedQuery(name = "EmarketUser.findByUserPassword", query = "SELECT e FROM EmarketUser e WHERE e.userPassword = :userPassword"),
-    @NamedQuery(name = "EmarketUser.findByUserRole", query = "SELECT e FROM EmarketUser e WHERE e.userRole = :userRole"),
-    @NamedQuery(name = "EmarketUser.findByName", query = "SELECT e FROM EmarketUser e WHERE e.name = :name"),
-    @NamedQuery(name = "EmarketUser.findByGender", query = "SELECT e FROM EmarketUser e WHERE e.gender = :gender"),
-    @NamedQuery(name = "EmarketUser.findByBalance", query = "SELECT e FROM EmarketUser e WHERE e.balance = :balance"),
+    @NamedQuery(name = "EmarketUser.findAll", query = "SELECT e FROM EmarketUser e")
+    ,
+    @NamedQuery(name = "EmarketUser.findById", query = "SELECT e FROM EmarketUser e WHERE e.emarketUserPK.id = :id")
+    ,
+    @NamedQuery(name = "EmarketUser.findByUserPassword", query = "SELECT e FROM EmarketUser e WHERE e.userPassword = :userPassword")
+    ,
+    @NamedQuery(name = "EmarketUser.findByUserRole", query = "SELECT e FROM EmarketUser e WHERE e.userRole = :userRole")
+    ,
+    @NamedQuery(name = "EmarketUser.findByName", query = "SELECT e FROM EmarketUser e WHERE e.name = :name")
+    ,
+    @NamedQuery(name = "EmarketUser.findByGender", query = "SELECT e FROM EmarketUser e WHERE e.gender = :gender")
+    ,
+    @NamedQuery(name = "EmarketUser.findByBalance", query = "SELECT e FROM EmarketUser e WHERE e.balance = :balance")
+    ,
     @NamedQuery(name = "EmarketUser.findByEmail", query = "SELECT e FROM EmarketUser e WHERE e.emarketUserPK.email = :email")})
 public class EmarketUser implements Serializable {
 
@@ -86,6 +95,7 @@ public class EmarketUser implements Serializable {
         this.name = name;
         this.gender = gender;
         this.balance = balance;
+
     }
 
     public EmarketUser(String id, String email) {
@@ -311,6 +321,33 @@ public class EmarketUser implements Serializable {
             return -1;
         }
         return 1;
+    }
+    public static int getUserRole(String email) {
+        String query = "SELECT user_role FROM emarket_user"+ " WHERE email='" + email + "'";
+        Connection conn = null;
+        int UserRoleByEmail = 0;
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            try {
+                conn = ds.getConnection();
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                if (rs.next()) {
+                    UserRoleByEmail = rs.getInt("user_role");
+                }
+            } catch (SQLException s) {
+                System.err.println(s);
+            } finally {
+                conn.close();
+            }
+        } catch (NamingException n) {
+            System.err.print(n);
+        } catch (SQLException s) {
+            System.err.println(s);
+        }
+        return UserRoleByEmail;
     }
 
 }
