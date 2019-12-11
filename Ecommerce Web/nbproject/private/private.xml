@@ -3,17 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/conf/persistence.xml</file>
             <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/java/entity/Product.java</file>
-            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/web/category.jsp</file>
-            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/java/sessionbean/CategorySessionBean.java</file>
-            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/java/entity/Category.java</file>
-            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/web/css/login-style.css</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/web/checkout.jsp</file>
             <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/java/controller/ControllerServlet.java</file>
             <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/web/index.jsp</file>
-            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/java/controller/Register.java</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/java/controller/BuyProduct.java</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/java/sessionbean/AbstractSessionBean.java</file>
             <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/java/listener/ControllerServletListener.java</file>
-            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/web/css/index-style.css</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/nbproject/build-impl.xml</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/java/sessionbean/ProductSessionBean.java</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/java/entity/Category.java</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/web/category.jsp</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/web/WEB-INF/jspf/header.jspf</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/src/java/controller/Register.java</file>
+            <file>file:/D:/Hoc%20tap/Third%20Year/Introduction%20to%20Software%20Engineer/Bài%20submit/Lab6%20Git/EcommerceWebsite/Ecommerce%20Web/web/contact.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -62,7 +62,7 @@
         <% } else {%>
         <div class="login_done">
             <div class="welcome_element">
-                Welcome, <a href="profile?id=${session.getAttribute("id")}"><%= session.getAttribute("name") %></a>
+                Welcome, <a href="profile?id=${session.getAttribute("id")}"><%= session.getAttribute("name")%></a>
             </div>
             <a href="logout"><div class="login_element">Logout</div></a>
         </div>
@@ -86,7 +86,11 @@
                         <img src="${initParam.imgProductPath}${product.getImage()}" alt="No image :(" width="274" height="170" />
                         <p><strong>${product.getDescription()} </strong><br /></p>
                         <p><a href="#"><strong>${product.getPrice()} </strong></a></p>
-                        <p><a href="#">Buy Now</a></p>
+                         <!--Handle Buy Product-->
+                        <% if (session.getAttribute("name") != null) { %>
+                        <p><a href="BuyProduct?productID=${product.getProductId()}">Buy Now</a></p>
+                        <p><a href="BuyProduct?addToCart=true&&productID=${product.getProductId()}">Add To Cart</a></p>
+                        <% }%>
                     </div>
                 </c:forEach>
                 <div class="clr"></div>
