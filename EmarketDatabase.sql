@@ -25,11 +25,26 @@ CREATE TABLE product_detail (
 	REFERENCES ordered_product(order_id, product_id)
 );
 
-CREATE TABLE role(
-	roleid int,
-	rolename nvarchar(50),
-	PRIMARY KEY(roleid),
-);
+INSERT INTO product_detail(product_id, information, image1, image2, image3, image4, image5, guaranty) VALUES
+	(1, 'This is a product which you can find in our website, it has better configuration than the previous products and easy to use ', 'late 2013-front.png', 'late 2013-connect.png', 'late 2013-charger.jpg', 'late 2013-moderm.jpg', 'late 2013-more view.jpg', '2 years'),
+	
+	(2, 'This product is one of the most modern Macbook on the market', 'macbookair2019-front.jpg', 'macbookair2019-side.jpg', 'macbookair2019-keyboard.jpg', 'macbookair2019-grey.jpg', 'macbookair2019-more modern.jpg', '18 months'),
+	
+	(3, 'This product is the newest modern of our website, it has a good price to buy', 'macbookpro2019-front.jpg', 'macbookpro2019-side1.jpg', 'macbookpro2019-side2.jpg', 'macbookpro2019-fix.jpg', 'macbookpro2019-more modern.jpg', '18 months'),
+	
+	(4, 'A product with a sophistication in ít, will bring a whole new experience for you', 'imacpro-front.jpg', 'imacpro-side.jpg', 'imacpro-behind.jpg', 'imacpro-memory.jpg', 'imacpro-accessories.jpg', '2 years'),
+	
+	(5, 'This is the newest Iphone that apple has produced', 'iphone11-front.jpg', 'iphone11-behind.jpg', 'iphone11-pink.jpg', 'iphone11-accessories.jpg', 'iphone11-more modern.jpg', '18 months'),
+	
+	(6, 'This iphone is the recommended product for you, who like high technology product', 'iphonexs-front.jpg', 'iphonexs-behind.jpg', 'iphonexs-pink.jpg', 'iphonexs-accessories.jpg', 'iphonexs-more modern.jpg', '18 months'),
+	
+	(7, 'This mouse will help you have a better experience with your computer', 'magicmouse2-box.jpg', 'magicmouse2-side.jpg', 'magicmouse2-bottom.jpg', 'magicmouse2-accessories.jpg', 'magicmouse2-more modern.jpg', '12 months'),
+	
+	(8, 'This product will very helpfull for you, it has more colors to choose', 'magictrackpad-box.jpg', 'magictrackpad-top.jpg', 'magictrackpad-side.png', 'magictrackpad-blue.jpg', 'magictrackpad-more modern.jpg', '6 months'),
+	
+	(9, 'This product will give you a new experience about headphone, with spectacular and compact design', 'airpod-full box.jpg', 'airpods-front.jpg', 'airpods-side.jpg', 'airpods-inside.jpg', 'airpods-more modern.jpg', '12 months'),
+	
+	(10, 'This is a pro-version of airpod', 'airpodpro-front.jpg', 'airpodpro-inside.jpg', 'airpodpro-accessories.jpg', 'airpodpro-black.jpg', 'airpodpro-more modern.jpg', '12 months');
 
 CREATE TABLE customer (
 	customer_id int PRIMARY KEY,
@@ -68,7 +83,7 @@ CREATE TABLE product (
 	name varchar(255),
 	price real,
 	description varchar(255),
-	description_detail varchar(1000),
+	description_detail varchar(3000),
 	image varchar(255),
 	thumb_image varchar(255),
 	last_update datetime,
@@ -80,13 +95,20 @@ CREATE TABLE product (
 	REFERENCES category(category_id)
 );
 
-INSERT INTO product_detail (product_id) VALUES
-	(1);
+CREATE TABLE emarket_user (
+	id varchar(20),
+	user_password VARCHAR(30) NOT NULL,
+	user_role INT CHECK(user_role BETWEEN 0 AND 3) NOT NULL,
+	name NVARCHAR(50) NOT NULL,
+	gender INT CHECK (gender BETWEEN 0 AND 2) NOT NULL,
+	balance INT NOT NULL,
+	email varchar(50),
+	PRIMARY KEY (id, email)
+);
 
-INSERT INTO category (category_id) VALUES (1);
-INSERT INTO role(roleid,rolename) VALUES (1,'admin'),(0,'customer');
-UPDATE emarket_user
-SET user_role=1 where name=N'l�m';
+
+
+INSERT INTO category (category_id) VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10);
 
 INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
 					last_update, categorycategory_id) VALUES 
@@ -104,27 +126,19 @@ INSERT INTO product (product_id, name, price, description, description_detail, i
 	 'MacLate2013.png', 
 	 'MacLate2013.png', 
 	 getdate(),
-	 1);
-	 
-INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
-					last_update, categorycategory_id) VALUES 
-	(2, 'Macbook Air 2019', '6000000.0', 
+	 1),
+	 (2, 'Macbook Air 2019', '6000000.0', 
 	'The Macbook Air 2019',
 	'The base model of the MacBook Air comes with 8GB of RAM and 128GB of storage, which are matched with a 1.6GHz dual-core Intel Core i5 processor.
 	 The processor appears a tad on the disappointing side for the price, compared to what you get elsewhere – the identically-priced HP Envy 13 gives you
  	 a quad-core processor – but HyperThreading means it can act like a quad-core processor, and it can boost its speed up to 3.6GHz for short tasks.
 	 The screen is a 13-inch 2560x1600 Retina display, and it now includes True Tone support, which is Apples tech for adjusting the screen colours slightly
-	 to match the ambient lighting in the room youre in, so your eyes dont become uncomfortable using a blue-tinted screen when your room lights are a soft orange.
-	 Its a really great feature, and it was a big shame not to have it on last years model – once you get used to it, going back to regular screens feels
-	 like a big step backwards.', 
+	 to match the ambient lighting in the room youre in, so your eyes dont become uncomfortable using a blue-tinted screen when your room lights are a soft orange.', 
 	 'MacbookAir2019.png', 
 	 'MacbookAir2019.png', 
 	 getdate(),
-	 2);
-	 
-INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
-					last_update, categorycategory_id) VALUES 
-	(3, 'Macbook Pro 2019', '8500000.0', 
+	 2),
+	 (3, 'Macbook Pro 2019', '8500000.0', 
 	'The Macbook Pro 2019',
 	'The new 16-inch MacBook Pro features a larger 16-inch Retina display, slimmer bezels, an updated
 	 keyboard with a scissor mechanism instead of a butterfly mechanism, up to 64GB RAM, up to 8TB of
@@ -134,11 +148,8 @@ INSERT INTO product (product_id, name, price, description, description_detail, i
 	 'MacbookPro2019.png', 
 	 'MacbookPro2019.png', 
 	 getdate(),
-	 3);
-	 
-INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
-					last_update, categorycategory_id) VALUES 
-	(4, 'iMac Pro', '9000000.0', 
+	 3),
+	 (4, 'iMac Pro', '9000000.0', 
 	'The iMac Pro',
 	'The iMac Pro was introduced at WWDC on June 5, 2017 and was released in December 2017. Apple billed
 	 it as "the most powerful Mac ever made". Its starting price is US$4999. It includes an 8-, 10-, 14-,
@@ -149,11 +160,8 @@ INSERT INTO product (product_id, name, price, description, description_detail, i
 	 'iMacPro.png', 
 	 'iMacPro.png', 
 	 getdate(),
-	 4);
-	 
-INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
-					last_update, categorycategory_id) VALUES 
-	(5, 'iPhone 11', '5000000.0', 
+	 4),
+	 (5, 'iPhone 11', '5000000.0', 
 	'The iPhone 11',
 	'The iPhone 11 succeeds the iPhone XR, and it features a 6.1-inch LCD display that Apple calls a
 	 "Liquid Retina HD Display." It features a 1792 x 828 resolution at 326ppi, a 1400:1 contrast ratio,
@@ -162,11 +170,8 @@ INSERT INTO product (product_id, name, price, description, description_detail, i
 	 'iphone 11.png', 
 	 'iphone 11.png', 
 	 getdate(),
-	 5);
-	 
-INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
-					last_update, categorycategory_id) VALUES 
-	(6, 'iPhone xs', '4000000.0', 
+	 5),
+	 (6, 'iPhone xs', '4000000.0', 
 	'The iPhone xs',
 	'The XS has a design visually near-identical to the X but includes upgraded hardware, featuring
 	 the A12 Bionic chip built with a 7 nanometer process. It also features a 5.85-inch (149 mm) OLED
@@ -179,29 +184,19 @@ INSERT INTO product (product_id, name, price, description, description_detail, i
 	 'iphone xs.png', 
 	 'iphone xs.png', 
 	 getdate(),
-	 6);
-	 
-INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
-					last_update, categorycategory_id) VALUES 
-	(7, 'Magic mouse 2', '1000000.0', 
+	 6),
+	 (7, 'Magic mouse 2', '1000000.0', 
 	'The magic mouse 2',
 	'The Magic Mouse 2 (Apple Magic Mouse 2), is a computer mouse developed and released by Apple Inc.
 	 It features a multi-touch acrylic surface for scrolling. The mouse detects the difference between
 	 gestures on the surface. Announced on October 13, 2015, it is similar to its predecessor as a Bluetooth-enabled
 	 trackpad with the key difference being that it is powered not by AA batteries, but by a rechargeable internal
-	 battery. The mouse is compatible with Apple Macintosh desktop and laptop computers running Mac OS X El
-	 Capitan versions 10.11 and higher and iPad tablets running iPadOS 13. The mouse features a lithium-ion rechargeable
-	 battery and Lightning connector for charging and pairing. Unlike other similar models, the Magic Mouse 2 has its charging
-	 connector on the bottom, and thus cannot be used during recharging. The mouse uses an ST Microelectronics STM32F103VB 72 MHz
-	 32-bit RISC ARM Cortex-M3 processor and includes the Broadcom BCM20733 Enhanced Data Rate Bluetooth 3.0.', 
+	 battery. The mouse uses an ST Microelectronics STM32F103VB 72 MHz 32-bit RISC ARM Cortex-M3 processor and includes the Broadcom BCM20733 Enhanced Data Rate Bluetooth 3.0.', 
 	 'magic mouse 2.png', 
 	 'magic mouse 2.png', 
 	 getdate(),
-	 7);
-	 
-INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
-					last_update, categorycategory_id) VALUES 
-	(8, 'Magic trackpad', '1500000.0', 
+	 7),
+	 (8, 'Magic trackpad', '1500000.0', 
 	'The magic trackpad',
 	'The Magic Trackpad is made of glass and aluminium. The trackpad is designed in the same style as Apples
      Wireless Keyboard and can sit flush to it. The entire trackpad can be used as a button; pressing down on 
@@ -210,10 +205,7 @@ INSERT INTO product (product_id, name, price, description, description_detail, i
 	 'magic trackpad.png', 
 	 'magic trackpad.png', 
 	 getdate(),
-	 8);
-	 
-INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
-					last_update, categorycategory_id) VALUES 
+	 8),  	
 	(9, 'Airpods', '2000000.0', 
 	'The airpods',
 	'The Apple AirPods 1 (1st generation), the first wireless earbuds to have been introduced by Apple, 
@@ -225,10 +217,7 @@ INSERT INTO product (product_id, name, price, description, description_detail, i
 	 'airpods.png', 
 	 'airpods.png', 
 	 getdate(),
-	 9);
-	 
-INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
-					last_update, categorycategory_id) VALUES 
+	 9),
 	(10, 'Airpods Pro', '3000000.0', 
 	'The airpods pro',
 	'AirPods Pro are wireless Bluetooth earbuds created by Apple, initially released on October 30, 2019. 
@@ -241,14 +230,5 @@ INSERT INTO product (product_id, name, price, description, description_detail, i
 	 10);
 	 
 
-CREATE TABLE emarket_user (
-	id varchar(20),
-	user_password VARCHAR(30) NOT NULL,
-	user_role INT CHECK(user_role BETWEEN 0 AND 3) NOT NULL,
-	name NVARCHAR(50) NOT NULL,
-	gender INT CHECK (gender BETWEEN 0 AND 2) NOT NULL,
-	balance INT NOT NULL,
-	email varchar(50),
-	PRIMARY KEY (id, email)
-);
+
 
