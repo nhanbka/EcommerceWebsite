@@ -65,6 +65,9 @@
                 Welcome, <a href="profile?id=${session.getAttribute("id")}"><%= session.getAttribute("name")%></a>
             </div>
             <a href="logout"><div class="login_element">Logout</div></a>
+            <% if (session.getAttribute("admin") != null) { %>
+            <a href="admin.jsp"><div class="login_element">ADMIN</div></a>
+            <% } %>
         </div>
         <% }%>
         <div class="search">

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -26,10 +26,10 @@ import javax.sql.DataSource;
 
 /**
  *
- * @author ADMIN
+ * @author Dell
  */
-@WebServlet(name = "register", urlPatterns = {"/register"})
-public class Register extends HttpServlet {
+@WebServlet(name = "manager_user", urlPatterns = {"/manager_user"})
+public class manager_user extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -47,17 +47,13 @@ public class Register extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet register</title>");
+            out.println("<title>Servlet manager_user</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet register at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet manager_user at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
-
-    private static int registerNormalUser(String name, String user_id, String password, String gender, String email) {
-        return EmarketUser.registerNormalUser(name, user_id, password, gender, email);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,7 +68,19 @@ public class Register extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        if (request.getParameter("page") != null) {
+            if (request.getParameter("page").equals("manager_user")) {
+                ArrayList<EmarketUser> listUser = EmarketUser.getListEmarketUser();
+                request.setAttribute("listUser", listUser);
+                request.getRequestDispatcher("manager_user.jsp").forward(request, response);
+            }
+        }
+        if (request.getParameter("Edit") != null) {
+            String productID = request.getParameter("Edit");
+            EmarketUser emarketUser = EmarketUser.getUserById(productID);
+            request.setAttribute("user", emarketUser);
+            request.getRequestDispatcher("editUser.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -98,31 +106,15 @@ public class Register extends HttpServlet {
                 session = request.getSession();
                 Connection conn = ds.getConnection();
                 String id = request.getParameter("user_id");
-                String email = request.getParameter("email");
-                String gender = request.getParameter("gender");
+                String userRole = request.getParameter("userRole");
                 String name = request.getParameter("name");
                 String password = request.getParameter("password");
-                int registerPossibility = registerNormalUser(name, id, password, gender, email);
-                switch (registerPossibility) {
-                    /* 
-                    -- return 1 if success   ------
-                    -- return 0 if duplicate ------
-                    -- return -1 if error    ------
-                     */
-                    case 1:
-                        session.setAttribute("register", "1");
-                        session.setAttribute("id", id);
-                        session.setAttribute("name", name);
-                        request.getRequestDispatcher("register.jsp").include(request, response);
-                        break;
-                    case -1:
-                        session.setAttribute("register", "0");
-                        request.getRequestDispatcher("register.jsp").include(request, response);
-                        break;
-                    case 0:
-                        session.setAttribute("register", "-1");
-                        request.getRequestDispatcher("register.jsp").include(request, response);
-                        break;
+                int registerPossibility = EmarketUser.updateUserInformation(name, Integer.parseInt(userRole), id, password);
+                if(registerPossibility == 1){
+                    request.getRequestDispatcher("admin.jsp").forward(request, response);
+                }
+                else {
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
                 conn.close();
             } catch (SQLException e) {

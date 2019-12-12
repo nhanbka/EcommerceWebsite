@@ -43,6 +43,8 @@
             <url-pattern>/login.jsp</url-pattern>
             <url-pattern>/category.jsp</url-pattern>
             <url-pattern>/register.jsp</url-pattern>
+            <url-pattern>/manager_user.jsp</url-pattern>
+            <url-pattern>/editUser.jsp</url-pattern>
             <url-pattern>/profile.jsp</url-pattern>
             <url-pattern>/checkout.jsp</url-pattern>
             <url-pattern>/product-detail.jsp</url-pattern>

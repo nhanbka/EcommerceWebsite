@@ -5,30 +5,27 @@
  */
 package controller;
 
-import entity.EmarketUser;
+
+
+import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
 
-/**
- *
- * @author ADMIN
- */
-public class Login extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+@WebServlet(name = "manager_product", urlPatterns = {"/manager_product"})
+public class manager_product extends HttpServlet {
+
+   /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -43,20 +40,13 @@ public class Login extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Login</title>");
+            out.println("<title>Servlet manager_user</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet manager_user at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
-
-    private boolean isValid(String email, String password, DataSource ds) {
-        if (EmarketUser.isExistEmail(email, ds) && EmarketUser.getPassword(email, ds).equals(password)) {
-            return true;
-        }
-        return false;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,13 +58,15 @@ public class Login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         ArrayList<Product> listProduct = Product.getListProduct();
+        request.setAttribute("listProduct", listProduct);
+        request.getRequestDispatcher("manager_product.jsp").forward(request, response);
     }
-
-    /**
+/**
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
@@ -85,28 +77,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Context initContext;
-        try {
-            initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup("java:comp/env");
-            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-
-            if (isValid(email, password, ds)) {
-                HttpSession session = request.getSession();
-                String name = EmarketUser.getUserName(email);
-                session.setAttribute("name", name);
-                int role = EmarketUser.getUserRole(email);
-                if (role == 1) {
-                    session.setAttribute("admin", role);
-                }
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
-        } catch (NamingException ex) {
-            Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -118,5 +89,4 @@ public class Login extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

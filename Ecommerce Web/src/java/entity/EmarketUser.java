@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -23,6 +25,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.servlet.RequestDispatcher;
 import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -210,6 +213,7 @@ public class EmarketUser implements Serializable {
                 if (rs.next()) {
                     UserNameByEmail = rs.getString("name");
                 }
+                rs.close();
             } catch (SQLException s) {
                 System.err.println(s);
             } finally {
@@ -274,7 +278,7 @@ public class EmarketUser implements Serializable {
     }
 
     public static boolean isExistUserId(String user_id, DataSource ds) {
-        String query = "SELECT username FROM emarket_user";
+        String query = "SELECT name FROM emarket_user";
         Connection conn = null;
         ResultSet rs = null;
         try {
@@ -308,7 +312,7 @@ public class EmarketUser implements Serializable {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
-            if (!(isExistUserId(user_id, ds) && isExistEmail(email, ds))) {
+            if (!(isExistUserId(user_id, ds) || isExistEmail(email, ds))) {
                 try {
                     conn = ds.getConnection();
                     PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -342,4 +346,135 @@ public class EmarketUser implements Serializable {
         return 1;
     }
 
+    public static int updateUserInformation(String name, int userRole, String user_id, String password) {
+        /* 
+        -- return 1 if success   ------
+        -- return 0 if duplicate ------
+        -- return -1 if error    ------
+         */
+        String query = "UPDATE emarket_user "
+                + "SET name=N'" + name + "', user_password='" + password + "', user_role = " + userRole + "  WHERE id='" + user_id + "'";
+        Connection conn = null;
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            EmarketUser users = EmarketUser.getUserById(user_id);
+            if (user_id.equals(users.getEmarketUserPK().getId()) || !(isExistUserId(user_id, ds))) {
+                try {
+                    conn = ds.getConnection();
+                    PreparedStatement preparedStatement = conn.prepareStatement(query);
+                    preparedStatement.execute();
+                } catch (SQLException s) {
+                    System.err.println(s);
+                    return -1;
+                } finally {
+                    conn.close();
+                }
+            } else {
+                return 0;
+            }
+        } catch (NamingException n) {
+            System.err.print(n);
+            return -1;
+        } catch (SQLException s) {
+            System.err.println(s);
+            return -1;
+        }
+        return 1;
+    }
+
+    public static int getUserRole(String email) {
+        String query = "SELECT user_role FROM emarket_user" + " WHERE email='" + email + "'";
+        Connection conn = null;
+        int UserRoleByEmail = 0;
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            try {
+                conn = ds.getConnection();
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                if (rs.next()) {
+                    UserRoleByEmail = rs.getInt("user_role");
+                }
+                rs.close();
+            } catch (SQLException s) {
+                System.err.println(s);
+            } finally {
+                conn.close();
+            }
+        } catch (NamingException n) {
+            System.err.print(n);
+        } catch (SQLException s) {
+            System.err.println(s);
+        }
+        return UserRoleByEmail;
+    }
+
+    public static ArrayList<EmarketUser> getListEmarketUser() {
+        String query = "SELECT * FROM emarket_user";
+        Connection conn = null;
+        ArrayList<EmarketUser> list = new ArrayList<>();
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            try {
+                conn = ds.getConnection();
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                while (rs.next()) {
+                    EmarketUserPK emarketUserPK = new EmarketUserPK(rs.getString("id"), rs.getString("email"));
+                    EmarketUser emarketUser = new EmarketUser(emarketUserPK, rs.getString("user_password"),
+                            rs.getInt("user_role"), rs.getNString("name"), rs.getInt("gender"),
+                            rs.getInt("balance"));
+                    list.add(emarketUser);
+                }
+                rs.close();
+            } catch (SQLException s) {
+                System.err.println(s);
+            } finally {
+                conn.close();
+            }
+        } catch (NamingException n) {
+            System.err.print(n);
+        } catch (SQLException s) {
+            System.err.println(s);
+        }
+        return list;
+    }
+
+    public static EmarketUser getUserById(String id) {
+        String query = "SELECT * FROM emarket_user WHERE id='" + id + "'";
+        Connection conn = null;
+        EmarketUser emarketUser = null;
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            try {
+                conn = ds.getConnection();
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                if (rs.next()) {
+                    EmarketUserPK emarketUserPK = new EmarketUserPK(rs.getString("id"), rs.getString("email"));
+                    emarketUser = new EmarketUser(emarketUserPK, rs.getString("user_password"),
+                            rs.getInt("user_role"), rs.getNString("name"), rs.getInt("gender"),
+                            rs.getInt("balance"));
+                }
+                rs.close();
+            } catch (SQLException s) {
+                System.err.println(s);
+            } finally {
+                conn.close();
+            }
+        } catch (NamingException n) {
+            System.err.print(n);
+        } catch (SQLException s) {
+            System.err.println(s);
+        }
+        return emarketUser;
+    }
 }

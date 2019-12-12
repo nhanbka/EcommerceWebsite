@@ -25,6 +25,11 @@ CREATE TABLE product_detail (
 	REFERENCES ordered_product(order_id, product_id)
 );
 
+CREATE TABLE role(
+	roleid int,
+	rolename nvarchar(50),
+	PRIMARY KEY(roleid),
+);
 
 CREATE TABLE customer (
 	customer_id int PRIMARY KEY,
@@ -79,6 +84,9 @@ INSERT INTO product_detail (product_id) VALUES
 	(1);
 
 INSERT INTO category (category_id) VALUES (1);
+INSERT INTO role(roleid,rolename) VALUES (1,'admin'),(0,'customer');
+UPDATE emarket_user
+SET user_role=1 where name=N'lâm';
 
 INSERT INTO product (product_id, name, price, description, description_detail, image, thumb_image,
 					last_update, categorycategory_id) VALUES 
