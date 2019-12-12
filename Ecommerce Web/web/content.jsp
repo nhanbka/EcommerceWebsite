@@ -16,7 +16,7 @@
                 <a href="manager_product.jsp"><img src="mos-css/Database.png"><br>PRODUCT</a>
             </div>
             <div class="shortcutHome">
-                <a href="manager_user.jsp"><img src="mos-css/User.png"><br>USER</a>
+                <a href="manager_user"><img src="mos-css/User.png"><br>USER</a>
             </div>
 
 

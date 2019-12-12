@@ -81,16 +81,6 @@ public class EmarketUser implements Serializable {
     @NotNull
     @Column(name = "balance")
     private int balance;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "user_email")
-    private String email;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "id")
-    private String id;
 
     public EmarketUser() {
     }
@@ -99,14 +89,13 @@ public class EmarketUser implements Serializable {
         this.emarketUserPK = emarketUserPK;
     }
 
-    public EmarketUser(EmarketUserPK emarketUserPK, String email, String id, String userPassword, int userRole, String name, int gender, int balance) {
+    public EmarketUser(EmarketUserPK emarketUserPK, String userPassword, int userRole, String name, int gender, int balance) {
         this.emarketUserPK = emarketUserPK;
         this.userPassword = userPassword;
         this.userRole = userRole;
         this.name = name;
         this.gender = gender;
         this.balance = balance;
-
     }
 
     public EmarketUser(String id, String email) {
@@ -161,21 +150,6 @@ public class EmarketUser implements Serializable {
         this.balance = balance;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     @Override
     public int hashCode() {
@@ -377,28 +351,38 @@ public class EmarketUser implements Serializable {
         }
         return UserRoleByEmail;
     }
-
-//    public class EmarketUserGet {
-//
-//        public ArrayList<EmarketUserGet> getListEmarketUser() throws SQLException, NamingException {
-//            Context initContext = new InitialContext();
-//            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/eMarket");
-//            Connection conn = ds.getConnection();
-//            Statement sttm = conn.createStatement();
-//            String sql = "SELECT * FROM emarket_user";
-//            PreparedStatement ps = conn.prepareCall(sql);
-//            ResultSet rs = ps.executeQuery();
-//            ArrayList<EmarketUserGet> list = new ArrayList<>();
-//            while (rs.next()) {
-//                EmarketUser emarketUser = new EmarketUser();
-//                emarketUser.setId(rs.getString("user_id"));
-//                emarketUser.setName(rs.getString("user_name"));
-//                emarketUser.setEmail(rs.getString("user_email"));
-//                emarketUser.setUserPassword(rs.getString("user_pass"));
-//                emarketUser.setUserRole(rs.getInt("user_role"));
-//                list.add(this);
-//            }
-//            return list;
-//        }
-//    }
+    
+    public static ArrayList<EmarketUser> getListEmarketUser() {
+        String query = "SELECT * FROM emarket_user";
+        Connection conn = null;
+        ArrayList<EmarketUser> list = new ArrayList<>();
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            try {
+                conn = ds.getConnection();
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                while (rs.next()) {
+                    EmarketUserPK emarketUserPK = new EmarketUserPK(rs.getString("id"), rs.getString("email"));
+                    EmarketUser emarketUser = new EmarketUser(emarketUserPK, rs.getString("user_password"), 
+                            rs.getInt("user_role"), rs.getNString("name"),  rs.getInt("gender"), 
+                            rs.getInt("balance"));
+                    list.add(emarketUser);
+                }
+                rs.close();
+            } catch (SQLException s) {
+                System.err.println(s);
+            } finally {
+                conn.close();
+            }
+        } catch (NamingException n) {
+            System.err.print(n);
+        } catch (SQLException s) {
+            System.err.println(s);
+        }
+        return list;
+    }
 }
+
