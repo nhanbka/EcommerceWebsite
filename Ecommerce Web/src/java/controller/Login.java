@@ -97,6 +97,8 @@ public class Login extends HttpServlet {
 
             if (isValid(email, password, ds)) {
                 HttpSession session = request.getSession();
+                String name = EmarketUser.getUserName(email);
+                session.setAttribute("name", name);
                 int role = EmarketUser.getUserRole(email);
                 session.setAttribute("role", role);
                 if (role == 0) {

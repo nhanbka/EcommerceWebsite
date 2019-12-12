@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,6 +81,16 @@ public class EmarketUser implements Serializable {
     @NotNull
     @Column(name = "balance")
     private int balance;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "user_email")
+    private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "id")
+    private String id;
 
     public EmarketUser() {
     }
@@ -88,7 +99,7 @@ public class EmarketUser implements Serializable {
         this.emarketUserPK = emarketUserPK;
     }
 
-    public EmarketUser(EmarketUserPK emarketUserPK, String userPassword, int userRole, String name, int gender, int balance) {
+    public EmarketUser(EmarketUserPK emarketUserPK, String email, String id, String userPassword, int userRole, String name, int gender, int balance) {
         this.emarketUserPK = emarketUserPK;
         this.userPassword = userPassword;
         this.userRole = userRole;
@@ -148,6 +159,22 @@ public class EmarketUser implements Serializable {
 
     public void setBalance(int balance) {
         this.balance = balance;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
@@ -322,8 +349,9 @@ public class EmarketUser implements Serializable {
         }
         return 1;
     }
+
     public static int getUserRole(String email) {
-        String query = "SELECT user_role FROM emarket_user"+ " WHERE email='" + email + "'";
+        String query = "SELECT user_role FROM emarket_user" + " WHERE email='" + email + "'";
         Connection conn = null;
         int UserRoleByEmail = 0;
         try {
@@ -350,4 +378,27 @@ public class EmarketUser implements Serializable {
         return UserRoleByEmail;
     }
 
+//    public class EmarketUserGet {
+//
+//        public ArrayList<EmarketUserGet> getListEmarketUser() throws SQLException, NamingException {
+//            Context initContext = new InitialContext();
+//            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/eMarket");
+//            Connection conn = ds.getConnection();
+//            Statement sttm = conn.createStatement();
+//            String sql = "SELECT * FROM emarket_user";
+//            PreparedStatement ps = conn.prepareCall(sql);
+//            ResultSet rs = ps.executeQuery();
+//            ArrayList<EmarketUserGet> list = new ArrayList<>();
+//            while (rs.next()) {
+//                EmarketUser emarketUser = new EmarketUser();
+//                emarketUser.setId(rs.getString("user_id"));
+//                emarketUser.setName(rs.getString("user_name"));
+//                emarketUser.setEmail(rs.getString("user_email"));
+//                emarketUser.setUserPassword(rs.getString("user_pass"));
+//                emarketUser.setUserRole(rs.getInt("user_role"));
+//                list.add(this);
+//            }
+//            return list;
+//        }
+//    }
 }
