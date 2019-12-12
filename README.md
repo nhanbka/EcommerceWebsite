@@ -1,6 +1,51 @@
-App using to create project
+----  ECOMMERCEWEBSITE VERSION 1 ----
+Introduction to Software Engineer Assignment
+Contribution:
+1. Le Trong Nhan (20173292)					2. Nguyen Duy Hoai Lam (20173225)
+3. Nguyen Ngoc Duc (20173025)				4. Dang Hong Thai (20173358)
 
-- Drawing UML Software: StarUML. Link: http://staruml.io/download
-- Using Java JDK 1.8. Link: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
-- Using Netbeans 11.1
+Introduction
 
+This website was built as an assignment of Introduction to Software Engineering course.
+We spent months studying jstl, SessionBean, Servlet, Session together under the guidance
+of Dr. Nguyen Nhat Hai, lectures of School of Information and Technology, Hanoi University
+of Science and Technology, Vietnam. We are very thankful for the knowledge which was taught
+by him to have this website.
+
+Prerequisites
+
+To run this ECOMMERCEWEBSITE:
+- Java JDK is required. We used Java JDK 1.8 :
+(https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
+when develop this program)
+- App was built based on Netbean 11.1 therefore I recommend using this to help this website
+run most stable:
+(https://netbeans.apache.org/download/nb110/index.html)
+- ECOMMERCEWEBSITE uses jdbc to connect with SQL Server Database:
+https://www.microsoft.com/en-us/download/details.aspx?id=11774
+- ECOMMERCEWEBSITE uses jstl 1.2.1 to handle view on jsp page:
+https://mvnrepository.com/artifact/org.glassfish.web/javax.servlet.jsp.jstl/1.2.1
+- ECOMMERCEWEBSITE runs on Glassfish Server 4.1:
+https://javaee.github.io/glassfish/download
+- Microsoft SQL Server was choosen to build database on it:
+https://www.microsoft.com/en-us/sql-server/sql-server-downloads
+
+Note:
+There may be more prerequisites if you want to build this website from source.
+
+
+Building ECOMMERCEWEBSITE (Note: Use Netbean to build and run project)
+
+Step 1: Run the EmarketDatabase.sql to initialize the database.
+Step 2: Open Project with Netbean 11.1.
+Step 3: Build and Run the Project.
+Step 4: Enjoy our modern, beautiful and multi-functional Website.
+
+
+Function of ECOMMERCEWEBSITE
+
+- Login, logout.
+- View Product.
+- Add Product to cart.
+- Buy Product.
+- Decentralization.
