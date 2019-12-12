@@ -6,7 +6,15 @@
 package entity;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +26,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,14 +39,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "product")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-    @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId"),
-    @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
-    @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price"),
-    @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
-    @NamedQuery(name = "Product.findByDescriptionDetail", query = "SELECT p FROM Product p WHERE p.descriptionDetail = :descriptionDetail"),
-    @NamedQuery(name = "Product.findByImage", query = "SELECT p FROM Product p WHERE p.image = :image"),
-    @NamedQuery(name = "Product.findByThumbImage", query = "SELECT p FROM Product p WHERE p.thumbImage = :thumbImage"),
+    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
+    ,
+    @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId")
+    ,
+    @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name")
+    ,
+    @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price")
+    ,
+    @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description")
+    ,
+    @NamedQuery(name = "Product.findByDescriptionDetail", query = "SELECT p FROM Product p WHERE p.descriptionDetail = :descriptionDetail")
+    ,
+    @NamedQuery(name = "Product.findByImage", query = "SELECT p FROM Product p WHERE p.image = :image")
+    ,
+    @NamedQuery(name = "Product.findByThumbImage", query = "SELECT p FROM Product p WHERE p.thumbImage = :thumbImage")
+    ,
     @NamedQuery(name = "Product.findByLastUpdate", query = "SELECT p FROM Product p WHERE p.lastUpdate = :lastUpdate")})
 public class Product implements Serializable {
 
@@ -186,5 +203,44 @@ public class Product implements Serializable {
     public String toString() {
         return "entity.Product[ productId=" + productId + " ]";
     }
-    
+
+    public static ArrayList<Product> getListProduct() {
+        String query = "SELECT * FROM product";
+        Connection conn = null;
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            try {
+                conn = ds.getConnection();
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                while (rs.next()) {
+                    Product p = new Product();
+                    p.setProductId(rs.getInt("product_id"));
+                    p.setPrice(rs.getFloat("price"));
+                    p.setName(rs.getString("name"));
+                    p.setDescription(rs.getString("description"));
+                    p.setImage(rs.getString("image"));
+                    p.setThumbImage(rs.getString("thumb_image"));
+                    p.setLastUpdate(rs.getDate("last_update"));
+                    p.setDescriptionDetail(rs.getString("description_detail"));
+
+                    list.add(p);
+                }
+                rs.close();
+            } catch (SQLException s) {
+                System.err.println(s);
+            } finally {
+                conn.close();
+            }
+        } catch (NamingException n) {
+            System.err.print(n);
+        } catch (SQLException s) {
+            System.err.println(s);
+        }
+        return list;
+    }
+
 }
