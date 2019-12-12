@@ -8,13 +8,21 @@ package controller;
 import entity.EmarketUser;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
 /**
  *
@@ -24,8 +32,7 @@ import javax.servlet.http.HttpSession;
 public class manager_user extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -61,10 +68,19 @@ public class manager_user extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<EmarketUser> listUser = EmarketUser.getListEmarketUser();
-        request.setAttribute("listUser", listUser);
-        request.getRequestDispatcher("manager_user.jsp").forward(request, response);
-
+        if (request.getParameter("page") != null) {
+            if (request.getParameter("page").equals("manager_user")) {
+                ArrayList<EmarketUser> listUser = EmarketUser.getListEmarketUser();
+                request.setAttribute("listUser", listUser);
+                request.getRequestDispatcher("manager_user.jsp").forward(request, response);
+            }
+        }
+        if (request.getParameter("Edit") != null) {
+            String productID = request.getParameter("Edit");
+            EmarketUser emarketUser = EmarketUser.getUserById(productID);
+            request.setAttribute("user", emarketUser);
+            request.getRequestDispatcher("editUser.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -78,7 +94,35 @@ public class manager_user extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        Context initContext;
+        try {
+            initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            try {
+                HttpSession session;
+                session = request.getSession();
+                Connection conn = ds.getConnection();
+                String id = request.getParameter("user_id");
+                String userRole = request.getParameter("userRole");
+                String name = request.getParameter("name");
+                String password = request.getParameter("password");
+                int registerPossibility = EmarketUser.updateUserInformation(name, Integer.parseInt(userRole), id, password);
+                if(registerPossibility == 1){
+                    request.getRequestDispatcher("admin.jsp").forward(request, response);
+                }
+                else {
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                }
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (NamingException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

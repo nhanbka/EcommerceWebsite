@@ -44,6 +44,7 @@
             <url-pattern>/category.jsp</url-pattern>
             <url-pattern>/register.jsp</url-pattern>
             <url-pattern>/manager_user.jsp</url-pattern>
+            <url-pattern>/editUser.jsp</url-pattern>
             <!-- và các trang khác -->
             <include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
             <include-coda>/WEB-INF/jspf/footer.jspf</include-coda>

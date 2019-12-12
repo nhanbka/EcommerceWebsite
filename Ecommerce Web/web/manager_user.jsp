@@ -27,6 +27,7 @@
                 <th class="data">userName</th>
                 <th class="data">Email</th>
                 <th class="data">Role</th>
+                <th class="data"></th>
 
             </tr>
             <c:forEach var="user" items="${listUser}">
@@ -35,8 +36,7 @@
                     <td class="data">${user.name}</td>
                     <td class="data">${user.emarketUserPK.email}</td>
                     <td class="data">${user.userRole}</td>
-
-
+                    <td class="data"><a href="manager_user?Edit=${user.emarketUserPK.id}"> Edit</a></td>
                 </tr>
             </c:forEach>
         </table>

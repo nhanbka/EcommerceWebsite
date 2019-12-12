@@ -39,20 +39,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "emarket_user")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EmarketUser.findAll", query = "SELECT e FROM EmarketUser e")
-    ,
-    @NamedQuery(name = "EmarketUser.findById", query = "SELECT e FROM EmarketUser e WHERE e.emarketUserPK.id = :id")
-    ,
-    @NamedQuery(name = "EmarketUser.findByUserPassword", query = "SELECT e FROM EmarketUser e WHERE e.userPassword = :userPassword")
-    ,
-    @NamedQuery(name = "EmarketUser.findByUserRole", query = "SELECT e FROM EmarketUser e WHERE e.userRole = :userRole")
-    ,
-    @NamedQuery(name = "EmarketUser.findByName", query = "SELECT e FROM EmarketUser e WHERE e.name = :name")
-    ,
-    @NamedQuery(name = "EmarketUser.findByGender", query = "SELECT e FROM EmarketUser e WHERE e.gender = :gender")
-    ,
-    @NamedQuery(name = "EmarketUser.findByBalance", query = "SELECT e FROM EmarketUser e WHERE e.balance = :balance")
-    ,
+    @NamedQuery(name = "EmarketUser.findAll", query = "SELECT e FROM EmarketUser e"),
+    @NamedQuery(name = "EmarketUser.findById", query = "SELECT e FROM EmarketUser e WHERE e.emarketUserPK.id = :id"),
+    @NamedQuery(name = "EmarketUser.findByUserPassword", query = "SELECT e FROM EmarketUser e WHERE e.userPassword = :userPassword"),
+    @NamedQuery(name = "EmarketUser.findByUserRole", query = "SELECT e FROM EmarketUser e WHERE e.userRole = :userRole"),
+    @NamedQuery(name = "EmarketUser.findByName", query = "SELECT e FROM EmarketUser e WHERE e.name = :name"),
+    @NamedQuery(name = "EmarketUser.findByGender", query = "SELECT e FROM EmarketUser e WHERE e.gender = :gender"),
+    @NamedQuery(name = "EmarketUser.findByBalance", query = "SELECT e FROM EmarketUser e WHERE e.balance = :balance"),
     @NamedQuery(name = "EmarketUser.findByEmail", query = "SELECT e FROM EmarketUser e WHERE e.emarketUserPK.email = :email")})
 public class EmarketUser implements Serializable {
 
@@ -150,7 +143,6 @@ public class EmarketUser implements Serializable {
         this.balance = balance;
     }
 
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -221,6 +213,7 @@ public class EmarketUser implements Serializable {
                 if (rs.next()) {
                     UserNameByEmail = rs.getString("name");
                 }
+                rs.close();
             } catch (SQLException s) {
                 System.err.println(s);
             } finally {
@@ -256,7 +249,7 @@ public class EmarketUser implements Serializable {
     }
 
     public static boolean isExistUserId(String user_id, DataSource ds) {
-        String query = "SELECT username FROM emarket_user";
+        String query = "SELECT name FROM emarket_user";
         Connection conn = null;
         ResultSet rs = null;
         try {
@@ -290,7 +283,7 @@ public class EmarketUser implements Serializable {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
-            if (!(isExistUserId(user_id, ds) && isExistEmail(email, ds))) {
+            if (!(isExistUserId(user_id, ds) || isExistEmail(email, ds))) {
                 try {
                     conn = ds.getConnection();
                     PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -304,6 +297,44 @@ public class EmarketUser implements Serializable {
                     }
                     preparedStatement.setInt(5, 0);
                     preparedStatement.setString(6, email);
+                    preparedStatement.execute();
+                } catch (SQLException s) {
+                    System.err.println(s);
+                    return -1;
+                } finally {
+                    conn.close();
+                }
+            } else {
+                return 0;
+            }
+        } catch (NamingException n) {
+            System.err.print(n);
+            return -1;
+        } catch (SQLException s) {
+            System.err.println(s);
+            return -1;
+        }
+        return 1;
+    }
+
+    public static int updateUserInformation(String name, int userRole, String user_id, String password) {
+        /* 
+        -- return 1 if success   ------
+        -- return 0 if duplicate ------
+        -- return -1 if error    ------
+         */
+        String query = "UPDATE emarket_user "
+                + "SET name=N'" + name + "', user_password='" + password + "', user_role = " + userRole + "  WHERE id='" + user_id + "'";
+        Connection conn = null;
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            EmarketUser users = EmarketUser.getUserById(user_id);
+            if (user_id.equals(users.getEmarketUserPK().getId()) || !(isExistUserId(user_id, ds))) {
+                try {
+                    conn = ds.getConnection();
+                    PreparedStatement preparedStatement = conn.prepareStatement(query);
                     preparedStatement.execute();
                 } catch (SQLException s) {
                     System.err.println(s);
@@ -339,6 +370,7 @@ public class EmarketUser implements Serializable {
                 if (rs.next()) {
                     UserRoleByEmail = rs.getInt("user_role");
                 }
+                rs.close();
             } catch (SQLException s) {
                 System.err.println(s);
             } finally {
@@ -351,7 +383,7 @@ public class EmarketUser implements Serializable {
         }
         return UserRoleByEmail;
     }
-    
+
     public static ArrayList<EmarketUser> getListEmarketUser() {
         String query = "SELECT * FROM emarket_user";
         Connection conn = null;
@@ -366,8 +398,8 @@ public class EmarketUser implements Serializable {
                 ResultSet rs = statement.executeQuery(query);
                 while (rs.next()) {
                     EmarketUserPK emarketUserPK = new EmarketUserPK(rs.getString("id"), rs.getString("email"));
-                    EmarketUser emarketUser = new EmarketUser(emarketUserPK, rs.getString("user_password"), 
-                            rs.getInt("user_role"), rs.getNString("name"),  rs.getInt("gender"), 
+                    EmarketUser emarketUser = new EmarketUser(emarketUserPK, rs.getString("user_password"),
+                            rs.getInt("user_role"), rs.getNString("name"), rs.getInt("gender"),
                             rs.getInt("balance"));
                     list.add(emarketUser);
                 }
@@ -384,5 +416,36 @@ public class EmarketUser implements Serializable {
         }
         return list;
     }
-}
 
+    public static EmarketUser getUserById(String id) {
+        String query = "SELECT * FROM emarket_user WHERE id='" + id + "'";
+        Connection conn = null;
+        EmarketUser emarketUser = null;
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            try {
+                conn = ds.getConnection();
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                if (rs.next()) {
+                    EmarketUserPK emarketUserPK = new EmarketUserPK(rs.getString("id"), rs.getString("email"));
+                    emarketUser = new EmarketUser(emarketUserPK, rs.getString("user_password"),
+                            rs.getInt("user_role"), rs.getNString("name"), rs.getInt("gender"),
+                            rs.getInt("balance"));
+                }
+                rs.close();
+            } catch (SQLException s) {
+                System.err.println(s);
+            } finally {
+                conn.close();
+            }
+        } catch (NamingException n) {
+            System.err.print(n);
+        } catch (SQLException s) {
+            System.err.println(s);
+        }
+        return emarketUser;
+    }
+}

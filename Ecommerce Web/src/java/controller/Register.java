@@ -86,6 +86,7 @@ public class Register extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         Context initContext;
         try {
@@ -118,6 +119,7 @@ public class Register extends HttpServlet {
                         request.getRequestDispatcher("register.jsp").include(request, response);
                         break;
                 }
+                conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

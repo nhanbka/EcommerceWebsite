@@ -63,6 +63,9 @@
         <div class="login_done">
             <div class="welcome_element">Welcome, <%= session.getAttribute("name")%></div> 
             <a href="logout"><div class="login_element">Logout</div></a>
+            <% if (session.getAttribute("admin") != null) { %>
+            <a href="admin.jsp"><div class="login_element">ADMIN</div></a>
+            <% } %>
         </div>
         <% }%>
         <div class="search">

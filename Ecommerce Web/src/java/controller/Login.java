@@ -28,8 +28,7 @@ import javax.sql.DataSource;
 public class Login extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -100,18 +99,14 @@ public class Login extends HttpServlet {
                 String name = EmarketUser.getUserName(email);
                 session.setAttribute("name", name);
                 int role = EmarketUser.getUserRole(email);
-                session.setAttribute("role", role);
-                if (role == 0) {
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
-                } else if (role == 1) {
-                    request.getRequestDispatcher("admin.jsp").forward(request, response);
+                if (role == 1) {
+                    session.setAttribute("admin", role);
                 }
-       
+                request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         } catch (NamingException ex) {
             Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**
