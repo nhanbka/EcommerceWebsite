@@ -59,5 +59,43 @@ public abstract class AbstractSessionBean<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
+    
+//        public static <T> findById(int productId){
+//        Product product = new Product();
+//        String query = "SELECT * FROM product"
+//                + " WHERE [product_id]='" + productId + "'";
+//        Connection conn = null;
+//        try {
+//            Context initContext = new InitialContext();
+//            Context envContext = (Context) initContext.lookup("java:comp/env");
+//            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+//            try {
+//                conn = ds.getConnection();
+//                Statement statement = conn.createStatement();
+//                ResultSet rs = statement.executeQuery(query);
+//                if (rs.next()) {
+//                    product.setProductId(productId);
+//                    product.setName(rs.getNString("name"));
+//                    product.setPrice(rs.getFloat("price"));
+//                    product.setDescription(rs.getString("description"));
+//                    product.setDescriptionDetail(rs.getString("description_detail"));
+//                    product.setImage(rs.getString("image"));
+//                    product.setThumbImage(rs.getString("thumb_image"));
+//                    product.setLastUpdate(rs.getDate("last_update"));
+//                    product.setCategorycategoryId(rs.getInt("categorycategory_id"));
+//                    product.setProductDetailproductId(rs.getInt("product_detailproduct_id"));
+//                }
+//            } catch (SQLException s) {
+//                System.err.println(s);
+//            } finally {
+//                conn.close();
+//            }
+//        } catch (NamingException n) {
+//            System.err.print(n);
+//        } catch (SQLException s) {
+//            System.err.println(s);
+//        }
+//        return product;
+//    }
 
 }

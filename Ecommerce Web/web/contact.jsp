@@ -1,6 +1,11 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('a[href="contact.jsp"]').addClass("active");
+        $('<link>').appendTo('head').attr({
+            type: 'text/css',
+            rel: 'stylesheet',
+            href: './css/index-style.css'
+        });
     });
 </script>
 <div class="header_blog">
