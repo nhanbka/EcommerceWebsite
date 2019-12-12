@@ -1,0 +1,35 @@
+.text_item h2 { 
+    font: bold 36px Arial, Helvetica, sans-serif; 
+    color: #fff; 
+    padding: 20px 0; 
+    margin:0; 
+    line-height: 1.2em;
+}
+
+.text_item p { 
+    font: normal 12px Arial, Helvetica, sans-serif; 
+    color:#8c9da1; 
+    padding:0 0 20px 0; 
+    margin:0; 
+    line-height:1.8em;
+}
+
+.body h2 {
+    font-size: 20px;
+}
+
+.body p {
+    font-size: 14px;
+    text-align: justify;
+    margin: 28px 50px auto 50px;
+}
+
+.text_item {
+    position: relative;
+    top: 100px;
+}
+
+#slider .button a {
+    color: white;
+    text-decoration: none;
+}

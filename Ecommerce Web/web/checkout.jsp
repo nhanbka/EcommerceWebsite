@@ -1,5 +1,3 @@
-<%@page import="java.util.Iterator"%>
-<%@page import="entity.Product"%>
 <script type="text/javascript">
     $(document).ready(function () {
         $('a[href="index.jsp"]').addClass("active");
@@ -38,9 +36,7 @@
     <div class="body_resize">
         <div class="body_resize_top">
             <div class="body_resize_bottom">
-                <% float x = 0; %>
-                <c:if test="${case == 1}" >
-                <c:forEach var="product" items="${newsProduct}">
+                <c:forEach var="product" items="${cart}">
                     <div class="blog">
                         <h2><a href="#">${product.getName()}</a></h2>
                         <img src="${initParam.imgProductPath}${product.getImage()}" alt="No image :(" width="274" height="170" />
@@ -48,22 +44,12 @@
                         <!--Handle Buy Product-->
                     </div>
                 </c:forEach>
-                </c:if>
-                <c:if test="${case == 2}" >
-                    <div class="blog">
-                        <h2><a href="#">${product.getName()}</a></h2>
-                        <img src="${initParam.imgProductPath}${product.getImage()}" alt="No image :(" width="274" height="170" />
-                        <p><a href="#"><strong>${product.getPrice()} </strong></a></p>
-                        <!--Handle Buy Product-->
-                    </div>
-                </c:if>
                 <div class="clr"></div>
                 <hr>
                 <h2>Subtotal: ${subTotal}</h2>
-                <form action="done.jsp">
-                    <input type="submit" value="Proceed">
-                </form>
+                <a href="BuyProduct?transact=1">Proceed</a>
             </div>
         </div>
     </div>
 </div>
+                

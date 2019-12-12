@@ -8,8 +8,6 @@ package controller;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +22,8 @@ import sessionbean.ProductSessionBean;
  *
  * @author ADMIN
  */
-@WebServlet(name = "BuyProduct", urlPatterns = {"/BuyProduct"})
-public class BuyProduct extends HttpServlet {
+@WebServlet(name = "ViewProduct", urlPatterns = {"/ViewProduct"})
+public class ViewProduct extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -43,10 +41,10 @@ public class BuyProduct extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BuyProduct</title>");
+            out.println("<title>Servlet ViewProduct</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BuyProduct at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewProduct at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -68,44 +66,10 @@ public class BuyProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String productId = request.getParameter("productID");
-        HttpSession session = request.getSession();
         if (productId != null) {
-            float subTotal = 0;
             Product product = productSessionBean.find(new Integer(productId));
-            ArrayList<Product> list;
-            list = (ArrayList<Product>) session.getAttribute("cart");
-            boolean appear = false;
-            if (list != null) {
-                for (Product item : list) {
-                    if (item.equals(product)) {
-                        appear = true;
-                    }
-                    subTotal += item.getPrice();
-                }
-            }
-            if (!appear) {
-                if (list == null) {
-                    subTotal += product.getPrice();
-                    list = new ArrayList<Product>();
-                    list.add(product);
-                    session.setAttribute("cart", list);
-                    session.setAttribute("subTotal", subTotal);
-                } else {
-                    list.add(product);
-                    session.setAttribute("cart", list);
-                    session.setAttribute("subTotal", subTotal);
-                }
-            }
-            if (request.getParameter("addToCart") != null) {
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            } else {
-                request.getRequestDispatcher("checkout.jsp").forward(request, response);
-            }
-        }
-        if(request.getParameter("transact") != null){
-            ArrayList<Product> list = (ArrayList<Product>)session.getAttribute("cart");
-            session.removeAttribute("cart");
-            request.getRequestDispatcher("finish-transaction.jsp").forward(request, response);
+            request.setAttribute("product", product);
+            request.getRequestDispatcher("product-detail.jsp").forward(request, response);
         }
     }
 
