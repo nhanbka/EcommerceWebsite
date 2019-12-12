@@ -226,6 +226,35 @@ public class EmarketUser implements Serializable {
         }
         return UserNameByEmail;
     }
+    
+    public static String getUserId(String email) {
+        String query = "SELECT id FROM emarket_user"
+                + " WHERE email='" + email + "'";
+        Connection conn = null;
+        String UserIdByEmail = null;
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            try {
+                conn = ds.getConnection();
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                if (rs.next()) {
+                    UserIdByEmail = rs.getString("id");
+                }
+            } catch (SQLException s) {
+                System.err.println(s);
+            } finally {
+                conn.close();
+            }
+        } catch (NamingException n) {
+            System.err.print(n);
+        } catch (SQLException s) {
+            System.err.println(s);
+        }
+        return UserIdByEmail;
+    }
 
     public static boolean isExistEmail(String email, DataSource ds) {
         String query = "SELECT email FROM emarket_user";

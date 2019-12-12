@@ -37,3 +37,7 @@
     background-color: #FFFFFF;
     padding-top: 6px;
 }
+
+.blog img {
+    cursor: pointer;
+}

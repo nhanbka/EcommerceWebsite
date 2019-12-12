@@ -61,7 +61,9 @@
         </div>
         <% } else {%>
         <div class="login_done">
-            <div class="welcome_element">Welcome, <%= session.getAttribute("name")%></div> 
+            <div class="welcome_element">
+                Welcome, <a href="profile?id=${session.getAttribute("id")}"><%= session.getAttribute("name")%></a>
+            </div>
             <a href="logout"><div class="login_element">Logout</div></a>
             <% if (session.getAttribute("admin") != null) { %>
             <a href="admin.jsp"><div class="login_element">ADMIN</div></a>
@@ -83,11 +85,18 @@
             <div class="body_resize_bottom">
                 <c:forEach var="product" items="${newProducts}">
                     <div class="blog">
-                        <h2><a href="#">${product.getName()}</a></h2>
-                        <img src="${initParam.imgProductPath}${product.getImage()}" alt="No image :(" width="274" height="170" />
+                        <h2><a href="ViewProduct?productID=${product.getProductId()}">${product.getName()}</a></h2>
+                        <a href="ViewProduct?productID=${product.getProductId()}">
+                            <img src="${initParam.imgProductPath}${product.getImage()}" 
+                                 alt="No image :(" width="274" height="170" />
+                        </a>
                         <p><strong>${product.getDescription()} </strong><br /></p>
-                        <p><a href="#"><strong>${product.getPrice()} </strong></a></p>
-                        <p><a href="#">Buy Now</a></p>
+                        <p><a href="ViewProduct?productID=${product.getProductId()}"><strong>${product.getPrice()} </strong></a></p>
+                        <!--Handle Buy Product-->
+                        <% if (session.getAttribute("name") != null) { %>
+                        <p><a href="BuyProduct?productID=${product.getProductId()}">Buy Now</a></p>
+                        <p><a href="BuyProduct?addToCart=true&&productID=${product.getProductId()}">Add To Cart</a></p>
+                        <% }%>
                     </div>
                 </c:forEach>
                 <div class="clr"></div>
@@ -95,3 +104,17 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#slideshow').cycle({
+            fx: 'fade',
+            speed: 'slow',
+            timeout: 5000,
+            pager: '#slider_nav',
+            pagerAnchorBuilder: function (idx, slide) {
+                // return sel string for existing anchor
+                return '#slider_nav li:eq(' + (idx) + ') a';
+            }
+        });
+    });
+</script>

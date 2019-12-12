@@ -104,6 +104,11 @@ public class Register extends HttpServlet {
                 String password = request.getParameter("password");
                 int registerPossibility = registerNormalUser(name, id, password, gender, email);
                 switch (registerPossibility) {
+                    /* 
+                    -- return 1 if success   ------
+                    -- return 0 if duplicate ------
+                    -- return -1 if error    ------
+                     */
                     case 1:
                         session.setAttribute("register", "1");
                         session.setAttribute("id", id);

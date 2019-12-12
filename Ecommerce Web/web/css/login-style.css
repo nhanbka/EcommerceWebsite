@@ -38,8 +38,9 @@
 }
 .pom-agile {
     position: relative;
+    display: -webkit-box;
 }
-input.pass {
+input.pass input.user {
     margin-top: .7em;
 }
 span.icon1, span.icon2 {
@@ -81,4 +82,14 @@ span.icon2 {
     -o-transition:0.5s all;
     -moz-transition:0.5s all;
     -ms-transition:0.5s all;
+}
+
+.properties {
+    width: 100px;
+    position: relative;
+    top: 13px;
+}
+
+.alert-text {
+    color: red;
 }

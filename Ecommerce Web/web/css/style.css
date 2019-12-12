@@ -7,10 +7,6 @@ html { padding:0; margin:0;}
 /********** header **********/
 .header_resize { margin:0; padding:0; background:url(images/header_bg.gif) top repeat-x;}
 .header { width:980px; padding:0; margin:0 auto; border-bottom:1px solid #3d464a;}
-.header_blog { background:url(images/slider_bg.jpg); padding:0; margin:0; }
-.header_blog_resize { width:980px; margin:0 auto; padding:0;}
-.header_blog_resize h2 { font:bold 36px Arial, Helvetica, sans-serif; color:#fff; padding:40px 0; margin:0;}
-.header_blog_resize img { float:right; padding:45px 0 0 0; margin:0;}
 
 /* 2 */
 .header_blog2 { background:url(images/header_blog_bg.gif) top center repeat-x; padding:20px 0 0 0; margin:0; height:95px;}

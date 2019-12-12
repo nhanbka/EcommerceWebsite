@@ -1,6 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
-        $('a[href="about.jsp"]').addClass("active");
+        $('a[href="index.jsp"]').addClass("active");
         $('<link>').appendTo('head').attr({
             type: 'text/css',
             rel: 'stylesheet',
@@ -8,13 +8,6 @@
         });
     });
 </script>
-<div class="header_blog">
-    <div class="header_blog_resize">
-        <h2>About</h2>
-    </div>
-    <div class="clr"></div>
-</div>
-<div class="clr"></div>
 <div class="body">
     <div class="search_bg">
         <% if (session.getAttribute("name") == null) { %>
@@ -43,21 +36,20 @@
     <div class="body_resize">
         <div class="body_resize_top">
             <div class="body_resize_bottom">
-                <div class="left">
-                    <h2>Some information of team</h2>
-                    <p>We have 4 people joining this project: <br></p>
-                    <ol>
-                        <li>Le Trong Nhan - 20173292</li>
-                        <li>Nguyen Duy Hoai Lam - 20173225</li>
-                        <li>Dang Hong Thai - 20173358</li>
-                        <li>Nguyen Ngoc Duc - 20173025</li>
-                    </ol>
-                    <p>&nbsp;</p>
-
-                </div>
+                <c:forEach var="product" items="${cart}">
+                    <div class="blog">
+                        <h2><a href="#">${product.getName()}</a></h2>
+                        <img src="${initParam.imgProductPath}${product.getImage()}" alt="No image :(" width="274" height="170" />
+                        <p><a href="#"><strong>${product.getPrice()} </strong></a></p>
+                        <!--Handle Buy Product-->
+                    </div>
+                </c:forEach>
                 <div class="clr"></div>
+                <hr>
+                <h2>Subtotal: ${subTotal}</h2>
+                <a href="BuyProduct?transact=1">Proceed</a>
             </div>
         </div>
     </div>
 </div>
-<div class="clr"></div>
+                

@@ -45,6 +45,10 @@
             <url-pattern>/register.jsp</url-pattern>
             <url-pattern>/manager_user.jsp</url-pattern>
             <url-pattern>/editUser.jsp</url-pattern>
+            <url-pattern>/profile.jsp</url-pattern>
+            <url-pattern>/checkout.jsp</url-pattern>
+            <url-pattern>/product-detail.jsp</url-pattern>
+            <url-pattern>/finish-transaction.jsp</url-pattern>
             <!-- và các trang khác -->
             <include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
             <include-coda>/WEB-INF/jspf/footer.jspf</include-coda>

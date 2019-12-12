@@ -1,6 +1,5 @@
 # folder in project
-**/build
-**/nbproject
+**/build/web/
 
 # Compiled class file
 *.class
