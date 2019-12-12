@@ -26,13 +26,13 @@
         <!-- start slideshow -->
         <div id="slideshow" style="width: 450px; float:right;">
             <div class="slider-item">
-                <a href="#"><img src="images/MacbookAir2019.png" alt="" width="511" height="323" border="0" /></a>
+                <a href="#"><img src="${initParam.imgProductDetailPath}${productDetail.getImage1()}" alt="" width="511" height="323" border="0" /></a>
             </div>
             <div class="slider-item">
-                <a href="#"><img src="images/iMacPro.png" alt="" width="390" height="370" border="0" /></a>
+                <a href="#"><img src="${initParam.imgProductDetailPath}${productDetail.getImage2()}" alt="" width="390" height="370" border="0" /></a>
             </div>
             <div class="slider-item">
-                <a href="#"><img src="images/MacbookPro2019.png" alt="" width="460" height="323" border="0" /></a>
+                <a href="#"><img src="${initParam.imgProductDetailPath}${productDetail.getImage3()}" alt="" width="460" height="323" border="0" /></a>
             </div>
         </div>
         <!-- end #slideshow -->

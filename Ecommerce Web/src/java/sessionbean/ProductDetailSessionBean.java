@@ -5,11 +5,11 @@
  */
 package sessionbean;
 
-import entity.Category;
 import entity.ProductDetail;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import sessionbean.AbstractSessionBean;
 
 /**
  *

@@ -109,7 +109,7 @@
 											"font": "Arial;13;0",
 											"left": -160,
 											"top": 48,
-											"width": 86.6708984375,
+											"width": 88,
 											"height": 13,
 											"text": "(from Activity1)"
 										},
@@ -499,7 +499,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": -160,
+											"left": -256,
 											"top": 112,
 											"height": 13
 										},
@@ -510,11 +510,11 @@
 												"$ref": "AAAAAAFu+32R/J8SWO8="
 											},
 											"font": "Arial;13;1",
-											"left": 253,
+											"left": 205,
 											"top": 503,
-											"width": 163.033203125,
+											"width": 247,
 											"height": 13,
-											"text": "You are successfully login"
+											"text": "Set session then redirect to index"
 										},
 										{
 											"_type": "LabelView",
@@ -524,9 +524,9 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": -160,
+											"left": -256,
 											"top": 112,
-											"width": 86.6708984375,
+											"width": 88,
 											"height": 13,
 											"text": "(from Activity1)"
 										},
@@ -538,16 +538,16 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": -160,
+											"left": -256,
 											"top": 112,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 248,
+									"left": 200,
 									"top": 496,
-									"width": 173.033203125,
+									"width": 257,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFu+32R/J8TrVk="
@@ -565,9 +565,9 @@
 							],
 							"font": "Arial;13;0",
 							"containerChangeable": true,
-							"left": 248,
+							"left": 200,
 							"top": 496,
-							"width": 173.033203125,
+							"width": 257,
 							"height": 41,
 							"nameCompartment": {
 								"$ref": "AAAAAAFu+32R/J8SWO8="
@@ -593,9 +593,9 @@
 										"$ref": "AAAAAAFu+33X1Z8q6Bk="
 									},
 									"font": "Arial;13;0",
-									"left": 351,
+									"left": 350,
 									"top": 457,
-									"width": 26.736328125,
+									"width": 28,
 									"height": 13,
 									"alpha": 1.5993596639770522,
 									"distance": 35.014282800023196,
@@ -689,7 +689,7 @@
 									"font": "Arial;13;0",
 									"left": 62,
 									"top": 333,
-									"width": 48.419921875,
+									"width": 49,
 									"height": 13,
 									"alpha": -4.736774263923765,
 									"distance": 41.012193308819754,
@@ -832,7 +832,7 @@
 											"font": "Arial;13;0",
 											"left": -64,
 											"top": 32,
-											"width": 86.6708984375,
+											"width": 88,
 											"height": 13,
 											"text": "(from Activity1)"
 										},
@@ -1224,7 +1224,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFu+3HWsJ40dHY="
 					},
-					"name": "You are successfully login"
+					"name": "Set session then redirect to index"
 				},
 				{
 					"_type": "UMLActivityFinalNode",

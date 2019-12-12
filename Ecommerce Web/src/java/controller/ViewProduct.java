@@ -6,6 +6,7 @@
 package controller;
 
 import entity.Product;
+import entity.ProductDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sessionbean.ProductDetailSessionBean;
 import sessionbean.ProductSessionBean;
 
 /**
@@ -69,6 +71,7 @@ public class ViewProduct extends HttpServlet {
         if (productId != null) {
             Product product = productSessionBean.find(new Integer(productId));
             request.setAttribute("product", product);
+            request.setAttribute("productDetail", ProductDetail.getProductDetailById(new Integer(productId)));
             request.getRequestDispatcher("product-detail.jsp").forward(request, response);
         }
     }

@@ -65,6 +65,10 @@
         <param-name>imgProductPath</param-name>
         <param-value>./img/demo/</param-value>
     </context-param>
+    <context-param>
+        <param-name>imgProductDetailPath</param-name>
+        <param-value>./img/detail/</param-value>
+    </context-param>
     <resource-ref>
         <description>Database eMarket Connection</description>
         <res-ref-name>jdbc/eMarket</res-ref-name>

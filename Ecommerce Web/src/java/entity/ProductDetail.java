@@ -6,7 +6,14 @@
 package entity;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +25,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,7 +50,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ProductDetail.findByAccessories", query = "SELECT p FROM ProductDetail p WHERE p.accessories = :accessories"),
     @NamedQuery(name = "ProductDetail.findByGuaranty", query = "SELECT p FROM ProductDetail p WHERE p.guaranty = :guaranty")})
 public class ProductDetail implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -80,110 +88,110 @@ public class ProductDetail implements Serializable {
         @JoinColumn(name = "ordered_productporduct_id", referencedColumnName = "product_id")})
     @ManyToOne
     private OrderedProduct orderedProduct;
-
+    
     public ProductDetail() {
     }
-
+    
     public ProductDetail(Integer productId) {
         this.productId = productId;
     }
-
+    
     public Integer getProductId() {
         return productId;
     }
-
+    
     public void setProductId(Integer productId) {
         this.productId = productId;
     }
-
+    
     public String getInformation() {
         return information;
     }
-
+    
     public void setInformation(String information) {
         this.information = information;
     }
-
+    
     public String getImage1() {
         return image1;
     }
-
+    
     public void setImage1(String image1) {
         this.image1 = image1;
     }
-
+    
     public String getImage2() {
         return image2;
     }
-
+    
     public void setImage2(String image2) {
         this.image2 = image2;
     }
-
+    
     public String getImage3() {
         return image3;
     }
-
+    
     public void setImage3(String image3) {
         this.image3 = image3;
     }
-
+    
     public String getImage4() {
         return image4;
     }
-
+    
     public void setImage4(String image4) {
         this.image4 = image4;
     }
-
+    
     public String getImage5() {
         return image5;
     }
-
+    
     public void setImage5(String image5) {
         this.image5 = image5;
     }
-
+    
     public String getAccessories() {
         return accessories;
     }
-
+    
     public void setAccessories(String accessories) {
         this.accessories = accessories;
     }
-
+    
     public String getGuaranty() {
         return guaranty;
     }
-
+    
     public void setGuaranty(String guaranty) {
         this.guaranty = guaranty;
     }
-
+    
     @XmlTransient
     public Collection<Product> getProductCollection() {
         return productCollection;
     }
-
+    
     public void setProductCollection(Collection<Product> productCollection) {
         this.productCollection = productCollection;
     }
-
+    
     public OrderedProduct getOrderedProduct() {
         return orderedProduct;
     }
-
+    
     public void setOrderedProduct(OrderedProduct orderedProduct) {
         this.orderedProduct = orderedProduct;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (productId != null ? productId.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -196,10 +204,49 @@ public class ProductDetail implements Serializable {
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
         return "entity.ProductDetail[ productId=" + productId + " ]";
     }
     
+    public static ProductDetail getProductDetailById(int id) {
+        String query = "SELECT * FROM product_detail WHERE product_id='" + id + "'";
+        Connection conn = null;
+        ProductDetail productDetailById = null;
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/eMarket");
+            try {
+                conn = ds.getConnection();
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                if (rs.next()) {
+                    productDetailById = new ProductDetail();
+                    productDetailById.setProductId(rs.getInt("product_id"));
+                    productDetailById.setInformation(rs.getString("information"));
+                    productDetailById.setImage1(rs.getString("image1"));
+                    productDetailById.setImage2(rs.getString("image2"));
+                    productDetailById.setImage3(rs.getString("image3"));
+                    productDetailById.setImage4(rs.getString("image4"));
+                    productDetailById.setImage5(rs.getString("image5"));
+                    productDetailById.setAccessories(rs.getString("accessories"));
+                    productDetailById.setGuaranty(rs.getString("guaranty"));
+                    productDetailById.setOrderedProduct(new OrderedProduct(rs.getInt("ordered_productorder_id"), rs.getInt("ordered_productporduct_id")));
+                    return productDetailById;
+                }
+                rs.close();
+            } catch (SQLException s) {
+                System.err.println(s);
+            } finally {
+                conn.close();
+            }
+        } catch (NamingException n) {
+            System.err.print(n);
+        } catch (SQLException s) {
+            System.err.println(s);
+        }
+        return productDetailById;
+    }
 }
